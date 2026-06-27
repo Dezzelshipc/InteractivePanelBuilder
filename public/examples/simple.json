@@ -1,0 +1,32 @@
+{
+  "version": "1.0",
+  "layout": {
+    "columns": 12,
+    "rows": 4,
+    "gap": 10,
+    "class": [],
+    "style": {}
+  },
+  "widgets": [
+    {
+      "id": "w1",
+      "type": "chart",
+      "position": { "x": 0, "y": 0, "w": 6, "h": 4 },
+      "props": {
+        "title": "Температура",
+        "dataSource": "sensor/temp",
+        "chartType": "line"
+      },
+      "style": { "background": "#fff", "borderRadius": "8px" }
+    },
+    {
+      "id": "w2",
+      "type": "video",
+      "position": { "x": 6, "y": 0, "w": 6, "h": 4 },
+      "props": {
+        "url": "rtsp://camera1/stream",
+        "autoplay": true
+      }
+    }
+  ]
+}
