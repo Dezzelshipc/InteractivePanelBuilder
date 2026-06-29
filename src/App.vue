@@ -1,12 +1,14 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
-import type { Ref } from 'vue'
-import { get_default_schema } from '@/schema/schema'
-import type { SchemaMain } from '@/schema/schema'
-import GridContainer from './components/grid/GridContainer.vue'
+import { onMounted, ref, type Ref } from 'vue'
+import { get_default_panel_config, type PanelConfig } from '@/schema/config.ts'
+import PanelRenderer from './components/renderer/PanelRenderer.vue'
+import { Checkbox } from 'primevue'
+import { is_editor } from './components/editor/editorController.ts'
 
-let schema = ref(get_default_schema())
-fetch('./examples/simple.json')
+const panelConfig = ref(get_default_panel_config())
+
+// onMounted(() => {
+fetch('/examples/simple.json')
   .then((response) => {
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`)
@@ -14,14 +16,21 @@ fetch('./examples/simple.json')
     return response.json()
   })
   .then((jsonContent) => {
-    schema.value = jsonContent
-    console.log(jsonContent)
+    panelConfig.value = jsonContent
+    // console.log(jsonContent)
   })
   .catch((error) => {
     console.error('Fetch error:', error)
   })
+// })
+
+const is_dev = ref(import.meta.env.DEV)
+console.log(is_dev)
 </script>
 
 <template>
-  <GridContainer :layout="schema.layout" :widgets="schema.widgets" />
+  <div class="absolute right-2 top-2" v-if="is_dev">
+    <Checkbox v-model="is_editor" binary />
+  </div>
+  <PanelRenderer :config="panelConfig" />
 </template>
