@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { PanelConfig } from '@/schema/config'
-import { computed, toRefs, watchEffect } from 'vue'
+import { computed } from 'vue'
 import WidgetRenderer from './WidgetRenderer.vue'
 
 const props = defineProps<{
@@ -40,12 +40,12 @@ const gridStyle = computed(() => ({
 <template>
   <div :class="classes" :style="gridStyle">
     <WidgetRenderer
-      v-for="widget in props.config.widgets"
-      :id="widget.id"
-      :key="widget.id"
+      v-for="(widget, id) in props.config.widgets"
+      :id="`widget-${id}`"
+      :key="id"
+      :widget-id="id"
       :widgetConfig="widget"
-    >
-    </WidgetRenderer>
+    />
   </div>
 </template>
 

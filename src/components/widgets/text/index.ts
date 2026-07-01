@@ -19,15 +19,15 @@ export const textWidget: WidgetDefinition = {
   propsSchema: [
     {
       name: 'title',
-      label: 'Заголовок',
+      label: 'fields.text.label',
       type: 'string',
-      default: 'Заголовок',
+      default: 'fields.text.label',
     },
     {
       name: 'text',
-      label: 'Текст',
+      label: 'fields.text.text',
       type: 'string',
-      default: 'Текст',
+      default: 'fields.text.text',
     },
   ],
   defaultStyle: {

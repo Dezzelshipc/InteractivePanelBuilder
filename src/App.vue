@@ -1,11 +1,7 @@
 <script lang="ts" setup>
-import { onMounted, ref, type Ref } from 'vue'
-import { get_default_panel_config, type PanelConfig } from '@/schema/config.ts'
 import PanelRenderer from './components/renderer/PanelRenderer.vue'
-import { Checkbox } from 'primevue'
-import { is_editor } from './components/editor/editorController.ts'
-
-const panelConfig = ref(get_default_panel_config())
+import { panelConfig } from './schema/index.ts'
+import EditorToolbox from './components/editor/EditorToolbox.vue'
 
 // onMounted(() => {
 fetch('/examples/simple.json')
@@ -23,14 +19,9 @@ fetch('/examples/simple.json')
     console.error('Fetch error:', error)
   })
 // })
-
-const is_dev = ref(import.meta.env.DEV)
-console.log(is_dev)
 </script>
 
 <template>
-  <div class="absolute right-2 top-2" v-if="is_dev">
-    <Checkbox v-model="is_editor" binary />
-  </div>
+  <EditorToolbox />
   <PanelRenderer :config="panelConfig" />
 </template>

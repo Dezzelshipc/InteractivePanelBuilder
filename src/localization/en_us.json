@@ -1,0 +1,17 @@
+{
+  "name": {
+    "en": "English",
+    "this": "English"
+  },
+  "editor": {
+    "edit_icon": "⚙️",
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "fields": {
+    "text": {
+      "label": "Label"
+    }
+  }
+}

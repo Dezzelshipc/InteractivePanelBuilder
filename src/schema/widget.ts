@@ -1,5 +1,5 @@
 import type { Component } from 'vue'
-import type { WidgetConfig, WidgetStyle } from './config'
+import type { WidgetStyle } from './config'
 
 export interface PropSchema {
   name: string
@@ -22,7 +22,7 @@ export interface WidgetDefinition<TClass = string[], TStyle = WidgetStyle> {
   defaultClass?: Partial<TClass>
   defaultStyle?: Partial<TStyle>
 
-  // Ограничения по размерам (для редактора)
+  // Ограничения по размерам для редактора
   meta?: {
     minWidth?: number
     minHeight?: number
@@ -30,7 +30,6 @@ export interface WidgetDefinition<TClass = string[], TStyle = WidgetStyle> {
   }
 }
 
-/** Зарегистрированный виджет с типом */
 export interface RegisteredWidget extends WidgetDefinition {
   type: string
 }

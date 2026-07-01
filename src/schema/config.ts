@@ -1,7 +1,7 @@
 export interface PanelConfig {
   version: string
   layout: LayoutConfig
-  widgets: WidgetConfig[]
+  widgets: Record<string, WidgetConfig>
 }
 
 export interface LayoutConfig {
@@ -24,7 +24,6 @@ export interface WidgetStyle {
 }
 
 export interface WidgetConfig<TProps = Record<string, any>> {
-  id: string
   type: string
   position: WidgetPosition
   props?: TProps
@@ -39,6 +38,6 @@ export function get_default_panel_config(): PanelConfig {
       columns: '4',
       rows: '4',
     },
-    widgets: [],
+    widgets: {},
   }
 }

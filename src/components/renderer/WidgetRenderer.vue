@@ -2,13 +2,14 @@
 import { loadWidget } from '@/registry/loadWidget'
 import { widgetRegistry } from '@/registry/widgetRegistry'
 import type { WidgetConfig } from '@/schema/config'
-import { ref, computed, onMounted, shallowRef } from 'vue'
+import { ref, computed, onMounted, shallowRef, readonly } from 'vue'
 
 import { ProgressSpinner } from 'primevue'
 import type { PropSchema } from '@/schema/widget'
 import { is_editor } from '../editor/editorController'
 
 const props = defineProps<{
+  widgetId: string
   widgetConfig: WidgetConfig
 }>()
 
@@ -38,10 +39,12 @@ function extractDefaults(schemas: PropSchema[] | undefined) {
   }
   return result
 }
-const widgetProps = computed(() => ({
-  ...extractDefaults(widgetDef.value?.propsSchema),
-  ...props.widgetConfig.props,
-}))
+const widgetProps = computed(() =>
+  readonly({
+    ...extractDefaults(widgetDef.value?.propsSchema),
+    ...props.widgetConfig.props,
+  }),
+)
 
 const containerClass = computed(() => {
   const classes = props.widgetConfig.class
@@ -59,7 +62,7 @@ onMounted(async () => {
 
 <template>
   <div
-    class="widget-container"
+    class="widget-container relative"
     :class="`widget-${props.widgetConfig.type} ${containerClass}`"
     :style="containerStyle"
     draggable="true"
@@ -67,6 +70,7 @@ onMounted(async () => {
     <component
       v-if="widgetDef && is_editor"
       :is="widgetDef.editor"
+      :widget-id="widgetId"
       :widget-props="widgetProps"
       :prop-schemas="widgetDef.propsSchema"
     />
