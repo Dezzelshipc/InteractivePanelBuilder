@@ -1,9 +1,13 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { is_editor } from './editorController'
+import { onMounted, ref } from 'vue'
+import { isEditorMode } from './editorController'
 import { loc } from '@/localization'
 import { Button, Checkbox, FileUpload, type FileUploadSelectEvent } from 'primevue'
 import { panelConfig } from '@/schema'
+
+onMounted(async () => {
+  import('./GenericWidgetEditor.vue')
+})
 
 const is_dev = ref(import.meta.env.DEV)
 
@@ -61,9 +65,13 @@ function uploadSchema(event: FileUploadSelectEvent) {
 </script>
 
 <template>
-  <div class="absolute right-2 top-2 flex flex-col gap-1 items-end" v-if="is_dev || is_editor">
-    <Checkbox v-model="is_editor" binary />
-    <section class="flex flex-col gap-1 items-end opacity-70" v-if="is_editor">
+  <div
+    class="absolute right-2 top-2 flex flex-col gap-1 items-end"
+    :style="{ zIndex: 1000 }"
+    v-if="is_dev || isEditorMode"
+  >
+    <Checkbox v-model="isEditorMode" binary />
+    <section class="flex flex-col gap-1 items-end opacity-80" v-if="isEditorMode">
       <div>{{ loc.editor.editor }}</div>
       <Button @click="saveSchema">{{ loc.editor.save }}</Button>
       <FileUpload
@@ -80,10 +88,11 @@ function uploadSchema(event: FileUploadSelectEvent) {
         :pt="{
           fileThumbnail: { style: { display: 'none' } },
         }"
-        ><template #empty>
-          <div>{{ loc.editor.dragdrop_upload }}</div>
-        </template></FileUpload
       >
+        <template #empty>
+          <div>{{ loc.editor.dragdrop_upload }}</div>
+        </template>
+      </FileUpload>
     </section>
   </div>
 </template>

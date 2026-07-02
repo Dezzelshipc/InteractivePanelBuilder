@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PanelConfig } from '@/schema/config'
+import type { PanelConfig, WidgetPosition } from '@/schema/config'
 import { computed } from 'vue'
 import WidgetRenderer from './WidgetRenderer.vue'
 
@@ -16,11 +16,6 @@ function isNumeric(value: string): boolean {
   return /^-?\d+$/.test(value)
 }
 
-function formatGridTemplate(str: string): string {
-  if (isNumeric(str)) return `repeat(${str}, 1fr)`
-  else return str
-}
-
 function formatGap(str: string | undefined): string | undefined {
   if (str === undefined || !isNumeric(str)) return str
   else return `${str}px`
@@ -30,20 +25,20 @@ const classes = computed(() => `panel-renderer ${formatClasses(props.config.layo
 
 const gridStyle = computed(() => ({
   display: 'grid',
-  gridTemplateColumns: formatGridTemplate(props.config.layout.columns),
-  gridTemplateRows: formatGridTemplate(props.config.layout.rows),
+  gridTemplateColumns: `repeat(${props.config.layout.columns}, 1fr)`,
+  gridTemplateRows: `repeat(${props.config.layout.rows}, 1fr)`,
   gap: formatGap(props.config.layout.gap),
   ...props.config.layout.style,
 }))
 </script>
 
 <template>
-  <div :class="classes" :style="gridStyle">
+  <div :class="classes" :style="gridStyle" @dragover.prevent>
     <WidgetRenderer
       v-for="(widget, id) in props.config.widgets"
       :id="`widget-${id}`"
       :key="id"
-      :widget-id="id"
+      :widgetId="id"
       :widgetConfig="widget"
     />
   </div>

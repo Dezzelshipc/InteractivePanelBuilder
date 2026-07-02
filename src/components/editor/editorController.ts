@@ -1,13 +1,13 @@
 import { ref } from 'vue'
 
-export const is_editor = ref(false)
+export const isEditorMode = ref(false)
 
 export function switchEditorMode() {
-  is_editor.value = !is_editor.value
+  isEditorMode.value = !isEditorMode.value
 }
 
 export function setEditorMode(value: boolean) {
-  is_editor.value = value
+  isEditorMode.value = value
 }
 
 declare global {

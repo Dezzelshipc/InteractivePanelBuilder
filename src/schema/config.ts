@@ -5,8 +5,8 @@ export interface PanelConfig {
 }
 
 export interface LayoutConfig {
-  columns: string
-  rows: string
+  columns: number
+  rows: number
   gap?: string
   class?: string[]
   style?: { [index: string]: string }
@@ -35,8 +35,8 @@ export function get_default_panel_config(): PanelConfig {
   return {
     version: '-1.0',
     layout: {
-      columns: '4',
-      rows: '4',
+      columns: 4,
+      rows: 4,
     },
     widgets: {},
   }
