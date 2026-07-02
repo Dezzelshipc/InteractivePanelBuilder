@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { is_editor } from './editorController'
 import { loc } from '@/localization'
-import { Button, Checkbox, FileUpload } from 'primevue'
+import { Button, Checkbox, FileUpload, type FileUploadSelectEvent } from 'primevue'
 import { panelConfig } from '@/schema'
 
 const is_dev = ref(import.meta.env.DEV)
@@ -27,6 +27,37 @@ function saveSchema() {
   document.body.removeChild(link)
   URL.revokeObjectURL(url)
 }
+
+function uploadSchema(event: FileUploadSelectEvent) {
+  const file = event.files[0] as File
+  if (!file) return
+
+  const onUpload = (text: string, badge: string) => {
+    const pending = document.getElementsByClassName(
+      'p-badge p-badge-warn p-fileupload-file-badge',
+    )?.[0]
+    if (pending) {
+      pending.innerHTML = text
+      pending.classList.remove('p-fileupload-file-badge')
+      pending.classList.replace('p-badge-warn', badge)
+    }
+    return pending
+  }
+
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    try {
+      const json = JSON.parse(e.target?.result as string)
+      panelConfig.value = json
+      console.log('Schema loaded:', json)
+      onUpload('Completed', 'p-badge-ok')
+    } catch (err) {
+      console.error('Invalid JSON file', err)
+      onUpload('Fail', 'p-badge-danger')
+    }
+  }
+  reader.readAsText(file)
+}
 </script>
 
 <template>
@@ -35,7 +66,24 @@ function saveSchema() {
     <section class="flex flex-col gap-1 items-end opacity-70" v-if="is_editor">
       <div>{{ loc.editor.editor }}</div>
       <Button @click="saveSchema">{{ loc.editor.save }}</Button>
-      <FileUpload mode="basic" auto :choose-label="loc.editor.load"></FileUpload>
+      <FileUpload
+        mode="advanced"
+        :multiple="false"
+        :show-upload-button="false"
+        :file-limit="1"
+        accept=".json"
+        auto
+        :choose-label="loc.editor.choose"
+        :upload-label="loc.editor.upload"
+        :cancel-label="loc.editor.cancel"
+        @select="uploadSchema"
+        :pt="{
+          fileThumbnail: { style: { display: 'none' } },
+        }"
+        ><template #empty>
+          <div>{{ loc.editor.dragdrop_upload }}</div>
+        </template></FileUpload
+      >
     </section>
   </div>
 </template>
