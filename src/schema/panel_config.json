@@ -1,0 +1,114 @@
+{
+  "$ref": "#/definitions/PanelConfig",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "LayoutConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "class": {
+          "type": "string"
+        },
+        "columns": {
+          "type": "number"
+        },
+        "gap": {
+          "type": "number"
+        },
+        "rows": {
+          "type": "number"
+        },
+        "style": {
+          "$ref": "#/definitions/StyleType"
+        }
+      },
+      "required": [
+        "columns",
+        "rows"
+      ],
+      "type": "object"
+    },
+    "PanelConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "layout": {
+          "$ref": "#/definitions/LayoutConfig"
+        },
+        "version": {
+          "type": "string"
+        },
+        "widgets": {
+          "additionalProperties": {
+            "$ref": "#/definitions/WidgetConfig"
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "version",
+        "layout",
+        "widgets"
+      ],
+      "type": "object"
+    },
+    "StyleType": {
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number",
+          "boolean"
+        ]
+      },
+      "type": "object"
+    },
+    "WidgetConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "class": {
+          "type": "string"
+        },
+        "position": {
+          "$ref": "#/definitions/WidgetPosition"
+        },
+        "props": {
+          "type": "object"
+        },
+        "style": {
+          "$ref": "#/definitions/StyleType"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "position"
+      ],
+      "type": "object"
+    },
+    "WidgetPosition": {
+      "additionalProperties": false,
+      "properties": {
+        "h": {
+          "type": "number"
+        },
+        "w": {
+          "type": "number"
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "w",
+        "h"
+      ],
+      "type": "object"
+    }
+  }
+}
+

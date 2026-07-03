@@ -1,15 +1,24 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
-import { isEditorMode } from './editorController'
+import { h, markRaw, onMounted, ref } from 'vue'
+import {
+  editorMode,
+  isEditorMode,
+  isPanelMode,
+  setEditorMode,
+  setPanelMode,
+} from './editorController'
 import { loc } from '@/localization'
-import { Button, Checkbox, FileUpload, type FileUploadSelectEvent } from 'primevue'
+import { Button, Checkbox, FileUpload, Toolbar, type FileUploadSelectEvent } from 'primevue'
+import { useToast } from 'primevue/usetoast'
 import { panelConfig } from '@/schema'
+import { configValidator } from '@/schema/configValidator.ts'
+import type { PanelConfig } from '@/schema/config.ts'
 
 onMounted(async () => {
   import('./GenericWidgetEditor.vue')
 })
 
-const is_dev = ref(import.meta.env.DEV)
+const toast = useToast()
 
 function saveSchema() {
   let date = new Date()
@@ -36,64 +45,110 @@ function uploadSchema(event: FileUploadSelectEvent) {
   const file = event.files[0] as File
   if (!file) return
 
-  const onUpload = (text: string, badge: string) => {
-    const pending = document.getElementsByClassName(
-      'p-badge p-badge-warn p-fileupload-file-badge',
-    )?.[0]
-    if (pending) {
-      pending.innerHTML = text
-      pending.classList.remove('p-fileupload-file-badge')
-      pending.classList.replace('p-badge-warn', badge)
-    }
-    return pending
+  const loading = {
+    severity: 'secondary',
+    summary: loc.value.editor.toast.loading.summary,
+    detail: loc.value.editor.toast.loading.details,
+    sticky: true,
   }
+
+  toast.add(loading)
 
   const reader = new FileReader()
   reader.onload = (e) => {
+    let tst = {}
     try {
       const json = JSON.parse(e.target?.result as string)
-      panelConfig.value = json
-      console.log('Schema loaded:', json)
-      onUpload('Completed', 'p-badge-ok')
+
+      const isValid = configValidator(json)
+
+      if (isValid) {
+        panelConfig.value = json as PanelConfig
+        console.log('Schema loaded:', json)
+        tst = {
+          severity: 'success',
+          summary: loc.value.editor.toast.success.summary,
+          detail: loc.value.editor.toast.success.details,
+          life: 3000,
+        }
+      } else {
+        console.error('Invalid JSON file types:', configValidator.errors)
+        const error = configValidator.errors?.[0]
+        tst = {
+          severity: 'error',
+          summary: loc.value.editor.toast.error.summary,
+          detail: `${loc.value.editor.toast.error.details_ajv} ${error?.instancePath} ${error?.message}`,
+          life: 5000,
+        }
+      }
     } catch (err) {
       console.error('Invalid JSON file', err)
-      onUpload('Fail', 'p-badge-danger')
+      toast.remove(loading)
+      tst = {
+        severity: 'error',
+        summary: loc.value.editor.toast.error.summary,
+        detail: loc.value.editor.toast.error.details_schema,
+        life: 5000,
+      }
     }
+    toast.remove(loading)
+    toast.add(tst)
+    fu.value.clear()
   }
   reader.readAsText(file)
+}
+
+const fu = ref()
+
+const onChoose = () => {
+  fu.value.choose()
 }
 </script>
 
 <template>
-  <div
-    class="absolute right-2 top-2 flex flex-col gap-1 items-end"
-    :style="{ zIndex: 1000 }"
-    v-if="is_dev || isEditorMode"
-  >
-    <Checkbox v-model="isEditorMode" binary />
-    <section class="flex flex-col gap-1 items-end opacity-80" v-if="isEditorMode">
-      <div>{{ loc.editor.editor }}</div>
-      <Button @click="saveSchema">{{ loc.editor.save }}</Button>
-      <FileUpload
-        mode="advanced"
-        :multiple="false"
-        :show-upload-button="false"
-        :file-limit="1"
-        accept=".json"
-        auto
-        :choose-label="loc.editor.choose"
-        :upload-label="loc.editor.upload"
-        :cancel-label="loc.editor.cancel"
-        @select="uploadSchema"
-        :pt="{
-          fileThumbnail: { style: { display: 'none' } },
-        }"
-      >
-        <template #empty>
-          <div>{{ loc.editor.dragdrop_upload }}</div>
-        </template>
-      </FileUpload>
-    </section>
+  <Toolbar v-if="isEditorMode">
+    <template #start>1</template>
+
+    <template #center>
+      <section class="flex flex-row gap-2 items-center">
+        <FileUpload
+          ref="fu"
+          name="demo[]"
+          mode="advanced"
+          :pt="{
+            root: {
+              class: 'cursor-pointer',
+              style: { maxHeight: 'min-content', maxWidth: '20em', textAlign: 'center' },
+            },
+            header: { class: 'hidden!' },
+            fileThumbnail: { style: { display: 'none' } },
+          }"
+          :multiple="false"
+          :file-limit="1"
+          accept=".json"
+          auto
+          @select="uploadSchema"
+          @click="onChoose"
+        >
+          <template #content>
+            <div class="flex pt-3">
+              <div class="text-sm font-medium">{{ loc.editor.dragdrop_upload }}</div>
+            </div>
+          </template>
+        </FileUpload>
+
+        <Button @click="saveSchema">{{ loc.editor.save }}</Button>
+      </section>
+    </template>
+
+    <template #end>
+      <Button @click="setPanelMode(true)" severity="danger" rounded>{{
+        loc.editor.start_panel
+      }}</Button>
+    </template>
+  </Toolbar>
+  <div class="absolute right-2 top-2" :style="{ zIndex: 1000 }" v-if="!isPanelMode">
+    <Checkbox v-model="editorMode" binary />
   </div>
 </template>
 

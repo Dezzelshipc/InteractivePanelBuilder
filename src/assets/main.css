@@ -13,3 +13,36 @@ body {
     width: inherit;
     height: inherit;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: bold;
+}
+
+h1 {
+    font-size: 2em;
+}
+
+h2 {
+    font-weight: 1.5em;
+}
+
+h3 {
+    font-weight: 1.17em;
+}
+
+h4 {
+    font-weight: 1em;
+}
+
+h5 {
+    font-weight: 0.83em;
+}
+
+h6 {
+    font-weight: 0.67em;
+}

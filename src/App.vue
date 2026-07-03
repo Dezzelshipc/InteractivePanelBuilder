@@ -3,6 +3,8 @@ import PanelRenderer from './components/renderer/PanelRenderer.vue'
 import { panelConfig } from './schema/index.ts'
 import EditorToolbox from './components/editor/EditorToolbox.vue'
 
+import Toast from 'primevue/toast'
+
 // onMounted(() => {
 fetch('/examples/simple.json')
   .then((response) => {
@@ -22,6 +24,7 @@ fetch('/examples/simple.json')
 </script>
 
 <template>
+  <Toast />
   <EditorToolbox />
   <PanelRenderer :config="panelConfig" />
 </template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PanelConfig, WidgetPosition } from '@/schema/config'
+import type { WidgetPosition, PanelConfig } from '@/schema/config'
 import { computed } from 'vue'
 import WidgetRenderer from './WidgetRenderer.vue'
 
@@ -7,27 +7,13 @@ const props = defineProps<{
   config: PanelConfig
 }>()
 
-function formatClasses(classes: string[] | undefined): string {
-  if (classes && classes !== undefined) return ` ${classes.join(' ')}`
-  else return ''
-}
-
-function isNumeric(value: string): boolean {
-  return /^-?\d+$/.test(value)
-}
-
-function formatGap(str: string | undefined): string | undefined {
-  if (str === undefined || !isNumeric(str)) return str
-  else return `${str}px`
-}
-
-const classes = computed(() => `panel-renderer ${formatClasses(props.config.layout.class)}`)
+const classes = computed(() => `panel-renderer ${props.config.layout.class}`)
 
 const gridStyle = computed(() => ({
   display: 'grid',
   gridTemplateColumns: `repeat(${props.config.layout.columns}, 1fr)`,
   gridTemplateRows: `repeat(${props.config.layout.rows}, 1fr)`,
-  gap: formatGap(props.config.layout.gap),
+  gap: `${props.config.layout.gap}px`,
   ...props.config.layout.style,
 }))
 </script>

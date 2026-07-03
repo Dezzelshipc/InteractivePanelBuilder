@@ -1,5 +1,6 @@
 import type { Component } from 'vue'
 import FieldString from './FieldString.vue'
+import FieldBoolean from './FieldBoolean.vue'
 
 class FieldsRegistry {
   private registry = new Map<string, Component>()
@@ -27,3 +28,4 @@ class FieldsRegistry {
 export const fieldsRegistry = new FieldsRegistry()
 
 fieldsRegistry.register('string', FieldString)
+fieldsRegistry.register('boolean', FieldBoolean)

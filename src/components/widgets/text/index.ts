@@ -8,7 +8,9 @@ const GenericWidgetEditor = defineAsyncComponent(
 
 export interface TextWidgetProps {
   title: string
+  title_center: boolean
   text: string
+  text_center: boolean
 }
 
 export const textWidget: WidgetDefinition = {
@@ -19,15 +21,27 @@ export const textWidget: WidgetDefinition = {
   propsSchema: [
     {
       name: 'title',
-      label: 'fields.text.label',
+      label: 'fields.text.title',
       type: 'string',
-      default: 'fields.text.label',
+      default: 'fields.text.title',
+    },
+    {
+      name: 'title_center',
+      label: 'fields.text.title_center',
+      type: 'boolean',
+      default: false,
     },
     {
       name: 'text',
       label: 'fields.text.text',
       type: 'string',
       default: 'fields.text.text',
+    },
+    {
+      name: 'text_center',
+      label: 'fields.text.text_center',
+      type: 'boolean',
+      default: false,
     },
   ],
   defaultStyle: {

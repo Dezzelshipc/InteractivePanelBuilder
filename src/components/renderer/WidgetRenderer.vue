@@ -55,7 +55,7 @@ function getLayoutParams() {
   const rect = container.getBoundingClientRect()
 
   const { columns, rows, gap } = panelConfig.value.layout
-  const gapNum = parseInt(gap || '0', 10) || 0
+  const gapNum = gap || 0
 
   const colWidth = (rect.width - (columns - 1) * gapNum) / columns
   const rowHeight = (rect.height - (rows - 1) * gapNum) / rows
