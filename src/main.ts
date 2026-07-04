@@ -5,7 +5,10 @@ import App from './App.vue'
 import PrimeVue from 'primevue/config'
 import Aura from '@primeuix/themes/aura'
 
+import 'primeicons/primeicons.css'
+
 import ToastService from 'primevue/toastservice'
+import Tooltip from 'primevue/tooltip'
 
 import '@/utility/bandaid.js'
 
@@ -19,4 +22,5 @@ app.use(PrimeVue, {
   },
 })
 app.use(ToastService)
+app.directive('tooltip', Tooltip)
 app.mount('#app')

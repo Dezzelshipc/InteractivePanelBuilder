@@ -6,8 +6,8 @@ import {
   isPanelMode,
   setEditorMode,
   setPanelMode,
-} from './editorController'
-import { loc } from '@/localization'
+} from './editorController.ts'
+import { l10n } from '@/localization'
 import { Button, Checkbox, FileUpload, Toolbar, type FileUploadSelectEvent } from 'primevue'
 import { useToast } from 'primevue/usetoast'
 import { panelConfig } from '@/schema'
@@ -47,8 +47,8 @@ function uploadSchema(event: FileUploadSelectEvent) {
 
   const loading = {
     severity: 'secondary',
-    summary: loc.value.editor.toast.loading.summary,
-    detail: loc.value.editor.toast.loading.details,
+    summary: l10n.value.editor.toast.loading.summary,
+    detail: l10n.value.editor.toast.loading.details,
     sticky: true,
   }
 
@@ -67,8 +67,8 @@ function uploadSchema(event: FileUploadSelectEvent) {
         console.log('Schema loaded:', json)
         tst = {
           severity: 'success',
-          summary: loc.value.editor.toast.success.summary,
-          detail: loc.value.editor.toast.success.details,
+          summary: l10n.value.editor.toast.success.summary,
+          detail: l10n.value.editor.toast.success.details,
           life: 3000,
         }
       } else {
@@ -76,8 +76,8 @@ function uploadSchema(event: FileUploadSelectEvent) {
         const error = configValidator.errors?.[0]
         tst = {
           severity: 'error',
-          summary: loc.value.editor.toast.error.summary,
-          detail: `${loc.value.editor.toast.error.details_ajv} ${error?.instancePath} ${error?.message}`,
+          summary: l10n.value.editor.toast.error.summary,
+          detail: `${l10n.value.editor.toast.error.details_ajv} ${error?.instancePath} ${error?.message}`,
           life: 5000,
         }
       }
@@ -86,8 +86,8 @@ function uploadSchema(event: FileUploadSelectEvent) {
       toast.remove(loading)
       tst = {
         severity: 'error',
-        summary: loc.value.editor.toast.error.summary,
-        detail: loc.value.editor.toast.error.details_schema,
+        summary: l10n.value.editor.toast.error.summary,
+        detail: l10n.value.editor.toast.error.details_schema,
         life: 5000,
       }
     }
@@ -107,7 +107,10 @@ const onChoose = () => {
 
 <template>
   <Toolbar v-if="isEditorMode">
-    <template #start>1</template>
+    <template #start>
+      <div>{{ l10n.editor.toolbar.add_widget }}*</div>
+      <div>{{ l10n.editor.toolbar.edit_panel_style }}*</div>
+    </template>
 
     <template #center>
       <section class="flex flex-row gap-2 items-center">
@@ -131,20 +134,24 @@ const onChoose = () => {
           @click="onChoose"
         >
           <template #content>
-            <div class="flex pt-3">
-              <div class="text-sm font-medium">{{ loc.editor.dragdrop_upload }}</div>
+            <div class="flex items-center pt-3">
+              <i class="pi pi-download" />
+              <div class="text-sm font-medium">
+                {{ l10n.editor.toolbar.dragdrop_upload }}
+              </div>
             </div>
           </template>
         </FileUpload>
 
-        <Button @click="saveSchema">{{ loc.editor.save }}</Button>
+        <Button icon="pi pi-save" @click="saveSchema" :label="l10n.editor.toolbar.save_schema" />
       </section>
     </template>
 
     <template #end>
-      <Button @click="setPanelMode(true)" severity="danger" rounded>{{
-        loc.editor.start_panel
-      }}</Button>
+      <Button @click="setPanelMode(true)" severity="danger" rounded>
+        <i class="pi pi-caret-right" />
+        {{ l10n.editor.toolbar.start_panel }}
+      </Button>
     </template>
   </Toolbar>
   <div class="absolute right-2 top-2" :style="{ zIndex: 1000 }" v-if="!isPanelMode">

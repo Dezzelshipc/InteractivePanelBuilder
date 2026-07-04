@@ -3,8 +3,9 @@ import type { PropSchema } from '@/schema/widget'
 import { Button, Dialog } from 'primevue'
 import { computed, onMounted, ref, watch } from 'vue'
 import { fieldsRegistry } from './fields/fieldsRegistry'
-import { loc } from '@/localization'
+import { l10n } from '@/localization'
 import { panelConfig } from '@/schema'
+import type { Style } from '@/schema/config'
 
 const props = defineProps<{
   widgetId: string
@@ -30,17 +31,14 @@ watch(visible, (is_visible) => {
   }
 })
 
-watch(
-  () => props.widgetProps,
-  () => {
-    if (!visible.value) {
-      initLocalProps()
-    }
-  },
-  { deep: true },
-)
+const watchList = [[() => props.widgetProps, initLocalProps]]
 
-onMounted(initLocalProps)
+for (const [w, f] of watchList) {
+  if (!w || !f) continue
+  watch(w, () => !visible.value && f(), { deep: true })
+
+  onMounted(f)
+}
 
 function buttonSave() {
   updateConfig()
@@ -56,8 +54,16 @@ function updateConfig() {
 </script>
 
 <template>
-  <Button class="edit-button" @click="visible = true">{{ loc.editor.edit_icon }}</Button>
-  <Dialog v-model:visible="visible" modal :header="loc.editor.edit" :style="{ minWidth: '50rem' }">
+  <Button
+    class="edit-button"
+    icon="pi pi-cog"
+    @click="visible = true"
+    severity="contrast"
+    variant="outlined"
+    raised
+    v-tooltip="l10n.editor.props.label"
+  />
+  <Dialog v-model:visible="visible" modal :header="l10n.editor.edit" :style="{ minWidth: '50rem' }">
     <component
       v-for="propSchema in propSchemas"
       :key="propSchema.name"
@@ -66,19 +72,12 @@ function updateConfig() {
       v-model="localProps[propSchema.name]"
     />
     <template #footer>
-      <Button severity="secondary" variant="outlined" @click="visible = false">{{
-        loc.editor.cancel
-      }}</Button>
-      <Button @click="buttonSave()">{{ loc.editor.apply }}</Button>
+      <Button severity="secondary" variant="outlined" @click="visible = false">
+        {{ l10n.editor.cancel }}
+      </Button>
+      <Button @click="buttonSave">{{ l10n.editor.apply }}</Button>
     </template>
   </Dialog>
 </template>
 
-<style scoped>
-.edit-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  opacity: 0.7;
-}
-</style>
+<style scoped></style>

@@ -21,25 +21,25 @@ export const textWidget: WidgetDefinition = {
   propsSchema: [
     {
       name: 'title',
-      label: 'fields.text.title',
+      label: 'widgets.text.title',
       type: 'string',
-      default: 'fields.text.title',
+      default: 'widgets.text.title',
     },
     {
       name: 'title_center',
-      label: 'fields.text.title_center',
+      label: 'widgets.text.title_center',
       type: 'boolean',
       default: false,
     },
     {
       name: 'text',
-      label: 'fields.text.text',
+      label: 'widgets.text.text',
       type: 'string',
-      default: 'fields.text.text',
+      default: 'widgets.text.text',
     },
     {
       name: 'text_center',
-      label: 'fields.text.text_center',
+      label: 'widgets.text.text_center',
       type: 'boolean',
       default: false,
     },

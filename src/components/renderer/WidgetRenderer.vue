@@ -10,6 +10,7 @@ import { isEditorMode } from '../editor/editorController'
 import { useDragDrop } from '@/composable/useDragDrop'
 import { panelConfig } from '@/schema'
 import { useResize } from '@/composable/useResize'
+import StyleWidgetEditor from '../editor/StyleWidgetEditor.vue'
 
 const props = defineProps<{
   widgetId: string
@@ -203,13 +204,23 @@ onMounted(async () => {
         @click.stop
       ></div>
     </template>
-    <component
-      v-if="widgetDef && isEditorMode"
-      :is="widgetDef.editor"
-      :widget-id="widgetId"
-      :widget-props="widgetProps"
-      :prop-schemas="widgetDef.propsSchema"
-    />
+    <section
+      class="absolute top-1 right-1 flex flex-col items-center gap-1 opacity-90"
+      v-if="isEditorMode"
+    >
+      <component
+        v-if="widgetDef"
+        :is="widgetDef.editor"
+        :widget-id="widgetId"
+        :widget-props="widgetProps"
+        :prop-schemas="widgetDef.propsSchema"
+      />
+      <style-widget-editor
+        :widget-id="widgetId"
+        :widget-class="widgetConfig.class"
+        :widget-style="widgetConfig.style"
+      />
+    </section>
     <component v-if="widgetDef" :is="widgetDef.component" :text-props="widgetProps" />
     <div v-else class="widget-loading"><progress-spinner aria-label="loading" /></div>
   </div>

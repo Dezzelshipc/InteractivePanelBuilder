@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import ru from './ru_ru.json'
 import en from './en_us.json'
-import { loc } from '.'
+import { l10n } from '.'
 
 export type LocType = typeof ru & Record<string, any>
 
@@ -29,7 +29,7 @@ export function changeLoc(value: string) {
   } else {
     lang = ru
   }
-  loc.value = lang
+  l10n.value = lang
 }
 
 declare global {

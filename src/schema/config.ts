@@ -4,14 +4,14 @@ export interface PanelConfig {
   widgets: Record<string, WidgetConfig>
 }
 
-export type StyleType = { [index: string]: string | number | boolean }
+export type Style = { [index: string]: string | number | boolean }
 
 export interface LayoutConfig {
   columns: number
   rows: number
   gap?: number
   class?: string
-  style?: StyleType
+  style?: Style
 }
 
 export interface WidgetPosition {
@@ -26,7 +26,7 @@ export interface WidgetConfig<TProps = Record<string, any>> {
   position: WidgetPosition
   props?: TProps
   class?: string
-  style?: StyleType
+  style?: Style
 }
 
 export function get_default_panel_config(): PanelConfig {

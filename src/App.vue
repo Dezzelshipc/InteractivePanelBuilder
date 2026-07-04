@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import PanelRenderer from './components/renderer/PanelRenderer.vue'
 import { panelConfig } from './schema/index.ts'
-import EditorToolbox from './components/editor/EditorToolbox.vue'
+import EditorToolbox from './components/editor/EditorToolbar.vue'
 
 import Toast from 'primevue/toast'
 

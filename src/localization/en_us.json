@@ -4,14 +4,18 @@
     "this": "English"
   },
   "editor": {
-    "edit_icon": "⚙️",
     "edit": "Edit",
     "save": "Save",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "apply": "Apply"
   },
-  "fields": {
+  "fields": {},
+  "widgets": {
     "text": {
-      "label": "Label"
+      "title": "Title",
+      "title_center": "Center title",
+      "text": "Text",
+      "text_center": "Center text"
     }
   }
 }
