@@ -173,7 +173,7 @@ onMounted(async () => {
 
 <template>
   <div
-    class="widget-container relative"
+    class="widget-container relative flex"
     :class="[
       { dragging: isDragging, resizing: isResizing, is_editor: isEditorMode },
       `widget-${props.widgetConfig.type}`,
@@ -221,15 +221,15 @@ onMounted(async () => {
         :widget-style="widgetConfig.style"
       />
     </section>
-    <component v-if="widgetDef" :is="widgetDef.component" :text-props="widgetProps" />
-    <div v-else class="widget-loading"><progress-spinner aria-label="loading" /></div>
+    <section class="overflow-hidden flex flex-col wh">
+      <component v-if="widgetDef" :is="widgetDef.component" :text-props="widgetProps" />
+      <div v-else class="widget-loading"><progress-spinner aria-label="loading" /></div>
+    </section>
   </div>
 </template>
 
 <style scoped lang="scss">
 .widget-container {
-  overflow: hidden;
-
   &.is_editor {
     cursor: grab;
     transition: 0.2s;

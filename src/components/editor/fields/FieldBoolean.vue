@@ -9,7 +9,7 @@ const props = defineProps<{
   propSchema: PropSchema
 }>()
 
-const prop_model = defineModel<boolean>()
+const propModel = defineModel<boolean>()
 </script>
 
 <template>
@@ -21,7 +21,7 @@ const prop_model = defineModel<boolean>()
       :id="propSchema.name"
       class="flex-auto"
       autocomplete="off"
-      v-model="prop_model"
+      v-model="propModel"
       binary
     />
   </div>

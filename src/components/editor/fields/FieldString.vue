@@ -9,7 +9,7 @@ const props = defineProps<{
   propSchema: PropSchema
 }>()
 
-const prop_model = defineModel<string>()
+const propModel = defineModel<string>()
 </script>
 
 <template>
@@ -22,7 +22,7 @@ const prop_model = defineModel<string>()
       class="flex-auto"
       autocomplete="off"
       :placeholder="getVal(l10n, props.propSchema.default, '')"
-      v-model="prop_model"
+      v-model="propModel"
     />
   </div>
 </template>

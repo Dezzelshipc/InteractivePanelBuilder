@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { l10n } from '@/localization'
-import { panelConfig } from '@/schema'
+import { panelConfig, saveLocalSchema } from '@/schema'
 import type { Style } from '@/schema/config'
 import { getVal } from '@/utility'
 import { Button, Dialog, Textarea } from 'primevue'
@@ -55,6 +55,7 @@ function updateConfig() {
   if (widget) {
     widget.class = localClass.value
     widget.style = { ...localStyle.value }
+    saveLocalSchema()
   }
 }
 </script>

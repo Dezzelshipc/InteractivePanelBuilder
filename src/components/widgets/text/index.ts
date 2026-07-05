@@ -1,5 +1,5 @@
 import { defineAsyncComponent } from 'vue'
-import type { WidgetDefinition } from '@/schema/widget'
+import { selectAlignX, selectAlignY, type WidgetDefinition } from '@/schema/widget'
 
 const TextWidget = defineAsyncComponent(() => import('./TextWidget.vue'))
 const GenericWidgetEditor = defineAsyncComponent(
@@ -8,9 +8,10 @@ const GenericWidgetEditor = defineAsyncComponent(
 
 export interface TextWidgetProps {
   title: string
-  title_center: boolean
+  title_align: 0 | 1 | 2
   text: string
-  text_center: boolean
+  text_align: 0 | 1 | 2
+  self_align: 0 | 1 | 2
 }
 
 export const textWidget: WidgetDefinition = {
@@ -26,10 +27,9 @@ export const textWidget: WidgetDefinition = {
       default: 'widgets.text.title',
     },
     {
-      name: 'title_center',
-      label: 'widgets.text.title_center',
-      type: 'boolean',
-      default: false,
+      name: 'title_align',
+      label: 'widgets.text.title_align',
+      ...selectAlignX,
     },
     {
       name: 'text',
@@ -38,10 +38,14 @@ export const textWidget: WidgetDefinition = {
       default: 'widgets.text.text',
     },
     {
-      name: 'text_center',
-      label: 'widgets.text.text_center',
-      type: 'boolean',
-      default: false,
+      name: 'text_align',
+      label: 'widgets.text.text_align',
+      ...selectAlignX,
+    },
+    {
+      name: 'self_align',
+      label: 'widgets.text.self_align',
+      ...selectAlignY,
     },
   ],
   defaultStyle: {

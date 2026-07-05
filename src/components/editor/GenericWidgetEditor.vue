@@ -4,7 +4,7 @@ import { Button, Dialog } from 'primevue'
 import { computed, onMounted, ref, watch } from 'vue'
 import { fieldsRegistry } from './fields/fieldsRegistry'
 import { l10n } from '@/localization'
-import { panelConfig } from '@/schema'
+import { panelConfig, saveLocalSchema } from '@/schema'
 import type { Style } from '@/schema/config'
 
 const props = defineProps<{
@@ -49,6 +49,7 @@ function updateConfig() {
   const widget = panelConfig.value.widgets[props.widgetId]
   if (widget) {
     widget.props = { ...localProps.value }
+    saveLocalSchema()
   }
 }
 </script>

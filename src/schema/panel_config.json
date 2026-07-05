@@ -18,7 +18,7 @@
           "type": "number"
         },
         "style": {
-          "$ref": "#/definitions/StyleType"
+          "$ref": "#/definitions/Style"
         }
       },
       "required": [
@@ -50,7 +50,7 @@
       ],
       "type": "object"
     },
-    "StyleType": {
+    "Style": {
       "additionalProperties": {
         "type": [
           "string",
@@ -73,7 +73,7 @@
           "type": "object"
         },
         "style": {
-          "$ref": "#/definitions/StyleType"
+          "$ref": "#/definitions/Style"
         },
         "type": {
           "type": "string"

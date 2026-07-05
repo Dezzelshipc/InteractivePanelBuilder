@@ -51,14 +51,24 @@
   "fields": {
     "object": {
       "add_property": "Добавить свойство"
+    },
+    "select": {
+      "align": {
+        "left": "Лево",
+        "right": "Право",
+        "center": "Центр",
+        "top": "Верх",
+        "bottom": "Низ"
+      }
     }
   },
   "widgets": {
     "text": {
       "title": "Заголовок",
-      "title_center": "Центрировать заголовок",
+      "title_align": "Положение заголовка",
       "text": "Текст",
-      "text_center": "Центрировать текст"
+      "text_align": "Положение текста",
+      "self_align": "Общее положение"
     }
   }
 }
