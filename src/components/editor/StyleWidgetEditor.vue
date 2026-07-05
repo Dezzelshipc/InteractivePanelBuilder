@@ -2,61 +2,22 @@
 import { l10n } from '@/localization'
 import { panelConfig, saveLocalSchema } from '@/schema'
 import type { Style } from '@/schema/config'
-import { getVal } from '@/utility'
-import { Button, Dialog, Textarea } from 'primevue'
+import { Button, Dialog } from 'primevue'
 import { onMounted, ref, watch } from 'vue'
-import FieldObject from './fields/FieldObject.vue'
+import FieldsClassStyle from './fields/FieldsClassStyle.vue'
 
 const props = defineProps<{
   widgetId: string
-  widgetClass?: string
-  widgetStyle?: Style
 }>()
 
 const visible = ref(false)
 
-const localClass = ref<string>('')
-const localStyle = ref<Style>({})
-
-function initLocalClass() {
-  localClass.value = props.widgetClass || ''
-}
-
-function initLocalStyle() {
-  localStyle.value = props.widgetStyle || {}
-}
-
-watch(visible, (is_visible) => {
-  if (is_visible) {
-    initLocalClass()
-    initLocalStyle()
-  }
-})
-
-const watchList = [
-  [() => props.widgetClass, initLocalClass],
-  [() => props.widgetStyle, initLocalStyle],
-]
-
-for (const [w, f] of watchList) {
-  if (!w || !f) continue
-  watch(w, () => !visible.value && f(), { deep: true })
-
-  onMounted(f)
-}
+const localClass = defineModel<string>('class')
+const localStyle = defineModel<Style>('style')
 
 function buttonSave() {
-  updateConfig()
+  saveLocalSchema()
   visible.value = false
-}
-
-function updateConfig() {
-  const widget = panelConfig.value.widgets[props.widgetId]
-  if (widget) {
-    widget.class = localClass.value
-    widget.style = { ...localStyle.value }
-    saveLocalSchema()
-  }
 }
 </script>
 
@@ -70,22 +31,19 @@ function updateConfig() {
     raised
     v-tooltip="l10n.editor.styles.label"
   />
-  <Dialog v-model:visible="visible" modal :header="l10n.editor.edit" :style="{ minWidth: '50rem' }">
-    <div class="flex items-center gap-4 mb-4">
-      <label for="style_class" class="font-semibold w-24 text-sm">
-        {{ l10n.editor.styles.class }}
-      </label>
-      <Textarea id="style_class" class="flex-auto" autocomplete="off" v-model="localClass" />
-    </div>
-
-    <div class="flex items-center gap-4 mb-4">
-      <label for="style_style" class="font-semibold w-24 text-sm">
-        {{ l10n.editor.styles.style }}
-      </label>
-      <FieldObject id="style_style" v-model="localStyle" />
-      <pre class="style-object">{{ localStyle }}</pre>
-    </div>
-
+  <Dialog
+    v-model:visible="visible"
+    modal
+    draggable
+    :header="l10n.editor.edit"
+    :style="{ minWidth: '50rem' }"
+    :pt="{
+      root: { style: { 'box-shadow': 'gray 0px 0px 1em 0.1em' } },
+      header: { class: 'cursor-move' },
+      mask: { style: { 'background-color': '#0000 !important' } },
+    }"
+  >
+    <FieldsClassStyle v-model:class="localClass" v-model:style="localStyle" />
     <template #footer>
       <Button severity="secondary" variant="outlined" @click="visible = false">
         {{ l10n.editor.cancel }}
@@ -94,11 +52,3 @@ function updateConfig() {
     </template>
   </Dialog>
 </template>
-
-<style scoped>
-.style-object {
-  border: 1px dashed #0003;
-  padding: 4px;
-  border-radius: 10px;
-}
-</style>

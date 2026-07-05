@@ -14,7 +14,6 @@ function saveSchema() {
   date = new Date(date.getTime() - offset * 60 * 1000)
   const dateStr = date.toISOString().replace('T', ' ').split('.')[0]
   const fileName = `schema-${dateStr}`
-  console.log(fileName)
 
   const jsonString = JSON.stringify(panelConfig.value, null, 2)
   const blob = new Blob([jsonString], { type: 'application/json' })

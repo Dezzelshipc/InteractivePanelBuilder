@@ -2,7 +2,7 @@
 import type { TextWidgetProps } from '.'
 
 const props = defineProps<{
-  textProps: TextWidgetProps
+  widgetProps: TextWidgetProps
 }>()
 
 function alignX(value: number) {
@@ -15,15 +15,18 @@ function alignY(value: number) {
 </script>
 
 <template>
-  <div :class="[alignY(textProps.self_align), 'wh flex flex-col']">
+  <div :class="[alignY(widgetProps.self_align), 'wh flex flex-col']">
     <h1
-      v-if="props.textProps.title"
-      :class="[alignX(textProps.title_align), 'whitespace-pre-line']"
+      v-if="props.widgetProps.title"
+      :class="[alignX(widgetProps.title_align), 'whitespace-pre-line']"
     >
-      {{ props.textProps.title }}
+      {{ props.widgetProps.title }}
     </h1>
-    <p v-if="props.textProps.text" :class="[alignX(textProps.text_align), 'whitespace-pre-line']">
-      {{ props.textProps.text }}
+    <p
+      v-if="props.widgetProps.text"
+      :class="[alignX(widgetProps.text_align), 'whitespace-pre-line']"
+    >
+      {{ props.widgetProps.text }}
     </p>
   </div>
 </template>

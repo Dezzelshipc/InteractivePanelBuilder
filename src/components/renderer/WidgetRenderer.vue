@@ -2,7 +2,7 @@
 import { loadWidget } from '@/registry/loadWidget'
 import { widgetRegistry } from '@/registry/widgetRegistry'
 import type { WidgetConfig, WidgetPosition } from '@/schema/config'
-import { ref, computed, onMounted, shallowRef, readonly } from 'vue'
+import { computed, onMounted, shallowRef } from 'vue'
 
 import { ProgressSpinner } from 'primevue'
 import type { PropSchema } from '@/schema/widget'
@@ -14,13 +14,19 @@ import StyleWidgetEditor from '../editor/StyleWidgetEditor.vue'
 
 const props = defineProps<{
   widgetId: string
-  widgetConfig: WidgetConfig
 }>()
 
-const widgetDef = shallowRef(widgetRegistry.get(props.widgetConfig.type))
+const widgetConfig = defineModel<WidgetConfig>('widgetConfig', { required: true })
+
+const widgetDef = shallowRef(widgetRegistry.get(widgetConfig.value.type))
+
+widgetConfig.value.props = {
+  ...extractDefaults(widgetDef.value?.propsSchema),
+  ...widgetConfig.value.props,
+}
 
 const gridPosition = computed(() => {
-  const { x, y, w, h } = props.widgetConfig.position
+  const { x, y, w, h } = widgetConfig.value.position
   return {
     gridColumn: `${x + 1} / span ${w}`,
     gridRow: `${y + 1} / span ${h}`,
@@ -29,8 +35,7 @@ const gridPosition = computed(() => {
 
 const containerStyle = computed(() => ({
   ...gridPosition.value,
-  ...widgetDef.value?.defaultStyle,
-  ...props.widgetConfig.style,
+  ...widgetConfig.value.style,
 }))
 
 function extractDefaults(schemas: PropSchema[] | undefined) {
@@ -43,12 +48,6 @@ function extractDefaults(schemas: PropSchema[] | undefined) {
   }
   return result
 }
-const widgetProps = computed(() =>
-  readonly({
-    ...extractDefaults(widgetDef.value?.propsSchema),
-    ...props.widgetConfig.props,
-  }),
-)
 
 function getLayoutParams() {
   const container = document.querySelector('.panel-renderer') as HTMLElement
@@ -69,7 +68,7 @@ let startPosition: WidgetPosition
 const { isDragging, dragHandlers } = useDragDrop({
   widgetId: props.widgetId,
   onDragStart: () => {
-    startPosition = props.widgetConfig.position
+    startPosition = widgetConfig.value.position
   },
   onDrag: (e, dx, dy) => {
     const params = getLayoutParams()
@@ -95,7 +94,7 @@ const { isDragging, dragHandlers } = useDragDrop({
 const { isResizing, handleMouseDown } = useResize({
   widgetId: props.widgetId,
   onResizeStart: (direction, e) => {
-    startPosition = props.widgetConfig.position
+    startPosition = widgetConfig.value.position
   },
   onResizeMove: (direction, dx, dy) => {
     const params = getLayoutParams()
@@ -106,8 +105,6 @@ const { isResizing, handleMouseDown } = useResize({
 
     const deltaW = Math.round(dx / (colWidth + gapNum))
     const deltaH = Math.round(dy / (rowHeight + gapNum))
-
-    console.log(dx, deltaW)
 
     let newX = x,
       newY = y,
@@ -165,8 +162,8 @@ const { isResizing, handleMouseDown } = useResize({
 
 onMounted(async () => {
   if (!widgetDef.value) {
-    await loadWidget(props.widgetConfig.type)
-    widgetDef.value = widgetRegistry.get(props.widgetConfig.type)
+    await loadWidget(widgetConfig.value.type)
+    widgetDef.value = widgetRegistry.get(widgetConfig.value.type)
   }
 })
 </script>
@@ -176,13 +173,13 @@ onMounted(async () => {
     class="widget-container relative flex"
     :class="[
       { dragging: isDragging, resizing: isResizing, is_editor: isEditorMode },
-      `widget-${props.widgetConfig.type}`,
-      props.widgetConfig.class,
+      `widget-${widgetConfig.type}`,
+      widgetConfig.class,
     ]"
     :style="containerStyle"
     v-bind="dragHandlers"
     :draggable="isEditorMode"
-    :data-widget-id="props.widgetId"
+    :data-widget-id="widgetId"
   >
     <template v-if="isEditorMode">
       <div
@@ -212,17 +209,17 @@ onMounted(async () => {
         v-if="widgetDef"
         :is="widgetDef.editor"
         :widget-id="widgetId"
-        :widget-props="widgetProps"
         :prop-schemas="widgetDef.propsSchema"
+        v-model:widget-props="widgetConfig.props"
       />
       <style-widget-editor
         :widget-id="widgetId"
-        :widget-class="widgetConfig.class"
-        :widget-style="widgetConfig.style"
+        v-model:class="widgetConfig.class"
+        v-model:style="widgetConfig.style"
       />
     </section>
     <section class="overflow-hidden flex flex-col wh">
-      <component v-if="widgetDef" :is="widgetDef.component" :text-props="widgetProps" />
+      <component v-if="widgetDef" :is="widgetDef.component" :widget-props="widgetConfig.props" />
       <div v-else class="widget-loading"><progress-spinner aria-label="loading" /></div>
     </section>
   </div>

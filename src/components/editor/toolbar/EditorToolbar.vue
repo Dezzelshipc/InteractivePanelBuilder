@@ -4,6 +4,7 @@ import { editorMode, isEditorMode, isPanelMode, setPanelMode } from '../editorCo
 import { l10n } from '@/localization'
 import { Button, Checkbox, Toolbar } from 'primevue'
 import SchemaUploader from './SchemaUploader.vue'
+import LayoutEditor from './LayoutEditor.vue'
 
 onMounted(async () => {
   import('../GenericWidgetEditor.vue')
@@ -13,8 +14,10 @@ onMounted(async () => {
 <template>
   <Toolbar v-if="isEditorMode">
     <template #start>
-      <div>{{ l10n.editor.toolbar.add_widget }}*</div>
-      <div>{{ l10n.editor.toolbar.edit_panel_style }}*</div>
+      <section class="flex flex-row gap-1 align-center">
+        <div>{{ l10n.editor.toolbar.add_widget }}*</div>
+        <LayoutEditor />
+      </section>
     </template>
 
     <template #center>

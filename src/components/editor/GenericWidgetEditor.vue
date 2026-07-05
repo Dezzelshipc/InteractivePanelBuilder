@@ -9,36 +9,16 @@ import type { Style } from '@/schema/config'
 
 const props = defineProps<{
   widgetId: string
-  widgetProps: Record<string, any>
   propSchemas: PropSchema[]
 }>()
 
 const visible = ref(false)
 
-const localProps = ref<Record<string, any>>({})
-
-function initLocalProps() {
-  const initial: Record<string, any> = {}
-  for (const schema of props.propSchemas) {
-    initial[schema.name] = props.widgetProps?.[schema.name]
-  }
-  localProps.value = initial
-}
-
-watch(visible, (is_visible) => {
-  if (is_visible) {
-    initLocalProps()
-  }
+const localProps = defineModel<Record<string, any>>('widgetProps', {
+  default: () => {
+    return {}
+  },
 })
-
-const watchList = [[() => props.widgetProps, initLocalProps]]
-
-for (const [w, f] of watchList) {
-  if (!w || !f) continue
-  watch(w, () => !visible.value && f(), { deep: true })
-
-  onMounted(f)
-}
 
 function buttonSave() {
   updateConfig()
@@ -64,7 +44,18 @@ function updateConfig() {
     raised
     v-tooltip="l10n.editor.props.label"
   />
-  <Dialog v-model:visible="visible" modal :header="l10n.editor.edit" :style="{ minWidth: '50rem' }">
+  <Dialog
+    v-model:visible="visible"
+    modal
+    draggable
+    :header="l10n.editor.edit"
+    :style="{ minWidth: '50rem' }"
+    :pt="{
+      root: { style: { 'box-shadow': 'gray 0px 0px 1em 0.1em' } },
+      header: { class: 'cursor-move' },
+      mask: { style: { 'background-color': '#0000 !important' } },
+    }"
+  >
     <component
       v-for="propSchema in propSchemas"
       :key="propSchema.name"

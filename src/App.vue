@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import PanelRenderer from './components/renderer/PanelRenderer.vue'
-import { loadLocalSchema, panelConfig } from './schema/index.ts'
+import { loadLocalSchema } from './schema/index.ts'
 import EditorToolbox from './components/editor/toolbar/EditorToolbar.vue'
 
 import Toast from 'primevue/toast'
@@ -12,5 +12,5 @@ onMounted(loadLocalSchema)
 <template>
   <Toast />
   <EditorToolbox />
-  <PanelRenderer :config="panelConfig" />
+  <PanelRenderer />
 </template>

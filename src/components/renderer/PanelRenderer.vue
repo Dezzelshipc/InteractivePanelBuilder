@@ -1,38 +1,30 @@
 <script setup lang="ts">
-import type { WidgetPosition, PanelConfig } from '@/schema/config'
+import type { WidgetPosition, PanelConfig, WidgetConfig } from '@/schema/config'
 import { computed } from 'vue'
 import WidgetRenderer from './WidgetRenderer.vue'
+import { panelConfig } from '@/schema/index.ts'
 
-const props = defineProps<{
-  config: PanelConfig
-}>()
+const config = panelConfig
 
-const classes = computed(() => `panel-renderer ${props.config.layout.class}`)
+const classes = computed(() => `panel-renderer wh ${config.value.layout.class}`)
 
 const gridStyle = computed(() => ({
   display: 'grid',
-  gridTemplateColumns: `repeat(${props.config.layout.columns}, 1fr)`,
-  gridTemplateRows: `repeat(${props.config.layout.rows}, 1fr)`,
-  gap: `${props.config.layout.gap}px`,
-  ...props.config.layout.style,
+  gridTemplateColumns: `repeat(${config.value.layout.columns}, 1fr)`,
+  gridTemplateRows: `repeat(${config.value.layout.rows}, 1fr)`,
+  gap: `${config.value.layout.gap}px`,
+  ...config.value.layout.style,
 }))
 </script>
 
 <template>
   <div :class="classes" :style="gridStyle" @dragover.prevent>
     <WidgetRenderer
-      v-for="(widget, id) in props.config.widgets"
+      v-for="(widget, id) in config.widgets"
       :id="`widget-${id}`"
       :key="id"
       :widgetId="id"
-      :widgetConfig="widget"
+      v-model:widgetConfig="config.widgets[id] as typeof widget"
     />
   </div>
 </template>
-
-<style scoped>
-.panel-renderer {
-  width: 100%;
-  height: 100%;
-}
-</style>

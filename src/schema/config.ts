@@ -21,20 +21,23 @@ export interface WidgetPosition {
   h: number
 }
 
-export interface WidgetConfig<TProps = Record<string, any>> {
+export interface WidgetConfig {
   type: string
   position: WidgetPosition
-  props?: TProps
+  props?: Record<string, any>
   class?: string
   style?: Style
 }
 
 export function get_default_panel_config(): PanelConfig {
   return {
-    version: '-1.0',
+    version: '1.0',
     layout: {
       columns: 4,
       rows: 4,
+      style: {
+        padding: '1em',
+      },
     },
     widgets: {},
   }
