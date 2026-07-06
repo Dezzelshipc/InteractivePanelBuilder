@@ -216,6 +216,7 @@ onMounted(async () => {
         :widget-id="widgetId"
         v-model:class="widgetConfig.class"
         v-model:style="widgetConfig.style"
+        v-model:pos="widgetConfig.position"
       />
     </section>
     <section class="overflow-hidden flex flex-col wh">

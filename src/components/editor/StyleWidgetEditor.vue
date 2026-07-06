@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { l10n } from '@/localization'
 import { panelConfig, saveLocalSchema } from '@/schema'
-import type { Style } from '@/schema/config'
+import { propWidgetPosition, type WidgetPosition, type Style } from '@/schema/config'
 import { Button, Dialog } from 'primevue'
 import { onMounted, ref, watch } from 'vue'
 import FieldsClassStyle from './fields/FieldsClassStyle.vue'
+import { checkRequired } from '@/composable/checkRequired.ts'
+import FieldNumber from './fields/FieldNumber.vue'
 
 const props = defineProps<{
   widgetId: string
@@ -15,9 +17,17 @@ const visible = ref(false)
 const localClass = defineModel<string>('class')
 const localStyle = defineModel<Style>('style')
 
+const localPosition = defineModel<WidgetPosition>('pos', { required: true })
+const { arrayRefs, isAll: isSavable } = checkRequired({ amount: 4 })
+
+const notNegNum = (x: number) => x >= 0
+const isPosNum = (x: number) => x > 0
+
 function buttonSave() {
-  saveLocalSchema()
-  visible.value = false
+  if (isSavable.value) {
+    saveLocalSchema()
+    visible.value = false
+  }
 }
 </script>
 
@@ -43,12 +53,37 @@ function buttonSave() {
       mask: { style: { 'background-color': '#0000 !important' } },
     }"
   >
+    <FieldNumber
+      :ref="arrayRefs[0]"
+      v-model="localPosition.x"
+      :prop-schema="propWidgetPosition.x"
+      :validator="notNegNum"
+    />
+    <FieldNumber
+      :ref="arrayRefs[1]"
+      v-model="localPosition.y"
+      :prop-schema="propWidgetPosition.y"
+      :validator="notNegNum"
+    />
+    <FieldNumber
+      :ref="arrayRefs[2]"
+      v-model="localPosition.w"
+      :prop-schema="propWidgetPosition.w"
+      :validator="isPosNum"
+    />
+    <FieldNumber
+      :ref="arrayRefs[3]"
+      v-model="localPosition.h"
+      :prop-schema="propWidgetPosition.h"
+      :validator="isPosNum"
+    />
+
     <FieldsClassStyle v-model:class="localClass" v-model:style="localStyle" />
     <template #footer>
       <Button severity="secondary" variant="outlined" @click="visible = false">
         {{ l10n.editor.cancel }}
       </Button>
-      <Button @click="buttonSave">{{ l10n.editor.apply }}</Button>
+      <Button @click="buttonSave" :disabled="!isSavable">{{ l10n.editor.apply }}</Button>
     </template>
   </Dialog>
 </template>

@@ -1,3 +1,5 @@
+import type { PropSchema } from './widget'
+
 export interface PanelConfig {
   version: string
   layout: LayoutConfig
@@ -41,4 +43,71 @@ export function get_default_panel_config(): PanelConfig {
     },
     widgets: {},
   }
+}
+
+export const propSchemaLayout: { [k in keyof Required<LayoutConfig>]: PropSchema } = {
+  columns: {
+    name: 'columns',
+    label: 'editor.layout.columns',
+    type: 'number',
+    default: 4,
+    required: true,
+  },
+  rows: {
+    name: 'rows',
+    label: 'editor.layout.rows',
+    type: 'number',
+    default: 4,
+    required: true,
+  },
+  gap: {
+    name: 'gap',
+    label: 'editor.layout.gap',
+    type: 'number',
+    default: 0,
+    required: false,
+  },
+  class: {
+    name: 'class',
+    label: 'editor.styles.class',
+    type: 'string',
+    default: '',
+  },
+  style: {
+    name: 'style',
+    label: 'editor.styles.style',
+    type: 'object',
+    default: '',
+  },
+}
+
+export const propWidgetPosition: { [k in keyof Required<WidgetPosition>]: PropSchema } = {
+  x: {
+    name: 'x',
+    label: 'editor.position.x',
+    type: 'number',
+    default: 0,
+    required: true,
+  },
+  y: {
+    name: 'y',
+    label: 'editor.position.y',
+    type: 'number',
+    default: 0,
+    required: true,
+  },
+  w: {
+    name: 'w',
+    label: 'editor.position.w',
+    type: 'number',
+    default: 1,
+    required: true,
+  },
+  h: {
+    name: 'h',
+    label: 'editor.position.h',
+    type: 'number',
+    default: 1,
+    required: true,
+  },
 }

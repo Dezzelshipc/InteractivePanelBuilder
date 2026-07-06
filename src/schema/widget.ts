@@ -4,7 +4,7 @@ import type { Style } from './config'
 export interface PropSchema {
   name: string
   label: string
-  type: 'string' | 'number' | 'boolean' | 'select' | 'dataSource' | 'color'
+  type: 'string' | 'number' | 'boolean' | 'select' | 'dataSource' | 'color' | 'object'
   options?: { value: any; label: string; icon?: string }[]
   default?: any
   required?: boolean
@@ -21,13 +21,6 @@ export interface WidgetDefinition<TClass = string[], TStyle = Style> {
 
   defaultClass?: Partial<TClass>
   defaultStyle?: Partial<TStyle>
-
-  // Ограничения по размерам для редактора
-  meta?: {
-    minWidth?: number
-    minHeight?: number
-    resizable?: boolean
-  }
 }
 
 export interface RegisteredWidget extends WidgetDefinition {

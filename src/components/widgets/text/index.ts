@@ -52,9 +52,6 @@ export const textWidget: WidgetDefinition = {
     borderRadius: '8px',
     padding: '12px',
   },
-  meta: {
-    resizable: true,
-  },
 }
 
 export default textWidget
