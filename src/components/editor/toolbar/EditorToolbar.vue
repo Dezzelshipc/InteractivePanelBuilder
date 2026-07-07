@@ -35,5 +35,3 @@ onMounted(async () => {
     <Checkbox v-model="editorMode" binary />
   </div>
 </template>
-
-<style scoped></style>

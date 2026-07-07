@@ -6,7 +6,7 @@ const props = defineProps<{
 }>()
 
 function alignX(value: number) {
-  return ['self-start', 'self-center', 'self-end'][value]
+  return ['self-start text-start', 'self-center text-center', 'self-end text-end'][value]
 }
 
 function alignY(value: number) {
@@ -30,5 +30,3 @@ function alignY(value: number) {
     </p>
   </div>
 </template>
-
-<style scoped></style>

@@ -1,4 +1,5 @@
-export function getVal(obj: Record<string, any>, path: string, defaultValue: any) {
+export function getVal(obj: Record<string, any>, path: string | undefined, defaultValue: any) {
+  if (!path) return defaultValue
   const keys = path.split('.')
   let current = obj
 

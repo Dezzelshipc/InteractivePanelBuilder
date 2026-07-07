@@ -127,5 +127,3 @@ const onChoose = () => {
     <Button icon="pi pi-save" @click="saveSchema" :label="l10n.editor.toolbar.save_schema" />
   </section>
 </template>
-
-<style scoped></style>

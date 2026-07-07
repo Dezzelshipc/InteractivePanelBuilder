@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import type { PropSchema } from '@/schema/widget'
 import { Button, Dialog } from 'primevue'
-import { computed, onMounted, ref, watch } from 'vue'
+import { ref } from 'vue'
 import { fieldsRegistry } from './fields/fieldsRegistry'
 import { l10n } from '@/localization'
 import { panelConfig, saveLocalSchema } from '@/schema'
-import type { Style } from '@/schema/config'
+import { useDialogSave } from '@/composable/useDialogSave'
+import { checkRequiredTemplate } from '@/composable/checkRequired'
 
 const props = defineProps<{
   widgetId: string
@@ -14,24 +15,18 @@ const props = defineProps<{
 
 const visible = ref(false)
 
-const localProps = defineModel<Record<string, any>>('widgetProps', {
-  default: () => {
-    return {}
-  },
+const { arrayRefs, isAll: isSavable } = checkRequiredTemplate('arrayRefs')
+
+const localProps = defineModel<Record<string, any>>('widgetProps', { required: true })
+function onSave() {
+  if (panelConfig.value.widgets[props.widgetId] && isSavable.value) saveLocalSchema()
+}
+
+const { onHideDialog, onShowDialog, onSaveButton } = useDialogSave({
+  isVisible: visible,
+  modelProps: [localProps],
+  onSave,
 })
-
-function buttonSave() {
-  updateConfig()
-  visible.value = false
-}
-
-function updateConfig() {
-  const widget = panelConfig.value.widgets[props.widgetId]
-  if (widget) {
-    widget.props = { ...localProps.value }
-    saveLocalSchema()
-  }
-}
 </script>
 
 <template>
@@ -52,12 +47,16 @@ function updateConfig() {
     :style="{ minWidth: '50rem' }"
     :pt="{
       root: { style: { 'box-shadow': 'gray 0px 0px 1em 0.1em' } },
+      content: { class: 'flex flex-col' },
       header: { class: 'cursor-move' },
       mask: { style: { 'background-color': '#0000 !important' } },
     }"
+    @hide="onHideDialog"
+    @show="onShowDialog"
   >
     <component
-      v-for="propSchema in propSchemas"
+      v-for="[i, propSchema] of propSchemas.entries()"
+      ref="arrayRefs"
       :key="propSchema.name"
       :is="fieldsRegistry.get(propSchema.type)"
       :prop-schema="propSchema"
@@ -67,9 +66,9 @@ function updateConfig() {
       <Button severity="secondary" variant="outlined" @click="visible = false">
         {{ l10n.editor.cancel }}
       </Button>
-      <Button @click="buttonSave">{{ l10n.editor.apply }}</Button>
+      <Button @click="onSaveButton" :disabled="!isSavable">
+        {{ l10n.editor.apply }}
+      </Button>
     </template>
   </Dialog>
 </template>
-
-<style scoped></style>

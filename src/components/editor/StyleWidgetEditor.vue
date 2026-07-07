@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { l10n } from '@/localization'
-import { panelConfig, saveLocalSchema } from '@/schema'
+import { saveLocalSchema } from '@/schema'
 import { propWidgetPosition, type WidgetPosition, type Style } from '@/schema/config'
-import { Button, Dialog } from 'primevue'
-import { onMounted, ref, watch } from 'vue'
+import { Button, Dialog, Divider } from 'primevue'
+import { ref } from 'vue'
 import FieldsClassStyle from './fields/FieldsClassStyle.vue'
-import { checkRequired } from '@/composable/checkRequired.ts'
+import { checkRequiredArray } from '@/composable/checkRequired.ts'
 import FieldNumber from './fields/FieldNumber.vue'
+import { useDialogSave } from '@/composable/useDialogSave.ts'
 
 const props = defineProps<{
   widgetId: string
@@ -18,17 +19,20 @@ const localClass = defineModel<string>('class')
 const localStyle = defineModel<Style>('style')
 
 const localPosition = defineModel<WidgetPosition>('pos', { required: true })
-const { arrayRefs, isAll: isSavable } = checkRequired({ amount: 4 })
+const { arrayRefs, isAll: isSavable } = checkRequiredArray(4)
 
 const notNegNum = (x: number) => x >= 0
 const isPosNum = (x: number) => x > 0
 
-function buttonSave() {
-  if (isSavable.value) {
-    saveLocalSchema()
-    visible.value = false
-  }
+function onSave() {
+  if (isSavable.value) saveLocalSchema()
 }
+
+const { onHideDialog, onShowDialog, onSaveButton } = useDialogSave({
+  isVisible: visible,
+  modelProps: [localClass, localStyle, localPosition],
+  onSave,
+})
 </script>
 
 <template>
@@ -49,9 +53,12 @@ function buttonSave() {
     :style="{ minWidth: '50rem' }"
     :pt="{
       root: { style: { 'box-shadow': 'gray 0px 0px 1em 0.1em' } },
+      content: { class: 'flex flex-col' },
       header: { class: 'cursor-move' },
       mask: { style: { 'background-color': '#0000 !important' } },
     }"
+    @hide="onHideDialog"
+    @show="onShowDialog"
   >
     <FieldNumber
       :ref="arrayRefs[0]"
@@ -78,12 +85,14 @@ function buttonSave() {
       :validator="isPosNum"
     />
 
+    <Divider />
+
     <FieldsClassStyle v-model:class="localClass" v-model:style="localStyle" />
     <template #footer>
       <Button severity="secondary" variant="outlined" @click="visible = false">
         {{ l10n.editor.cancel }}
       </Button>
-      <Button @click="buttonSave" :disabled="!isSavable">{{ l10n.editor.apply }}</Button>
+      <Button @click="onSaveButton" :disabled="!isSavable">{{ l10n.editor.apply }}</Button>
     </template>
   </Dialog>
 </template>

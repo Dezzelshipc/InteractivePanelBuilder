@@ -1,4 +1,3 @@
-import { ref } from 'vue'
 import ru from './ru_ru.json'
 import en from './en_us.json'
 import { l10n } from '.'

@@ -1,5 +1,4 @@
-import { isEditorMode } from '@/components/editor/editorController'
-import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
+import { ref } from 'vue'
 
 export function useDragDrop(options: {
   widgetId: string

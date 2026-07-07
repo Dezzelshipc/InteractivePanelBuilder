@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue'
+import { ref, watch } from 'vue'
 import { InputText, InputNumber, Checkbox, Button, Select } from 'primevue'
 import { l10n } from '@/localization'
 

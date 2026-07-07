@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import { checkValid } from '@/composable/checkRequired'
 import { l10n } from '@/localization'
 import type { PropSchema } from '@/schema/widget'
 import { getVal } from '@/utility'
-import { InputNumber, InputText, Textarea } from 'primevue'
-import { computed } from 'vue'
+import { InputNumber } from 'primevue'
 
 const props = defineProps<{
   propSchema: PropSchema
@@ -12,16 +12,15 @@ const props = defineProps<{
 
 const propModel = defineModel<number>()
 
-const isInvalid = computed(() => {
-  if (!props.propSchema.required) return false
-  return propModel.value == null || !props?.validator?.(propModel.value ?? 0)
-})
+const { isValid } = checkValid([
+  {
+    model: propModel,
+    required: props.propSchema.required,
+    validator: props.validator,
+  },
+])
 
-const validate = (): boolean => {
-  return !isInvalid.value
-}
-
-defineExpose({ validate })
+defineExpose({ isValid })
 </script>
 
 <template>
@@ -36,7 +35,7 @@ defineExpose({ validate })
       autocomplete="off"
       :placeholder="String(props.propSchema.default || 0)"
       v-model="propModel"
-      :invalid="isInvalid"
+      :invalid="!isValid"
     />
   </div>
 </template>

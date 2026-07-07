@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { WidgetPosition, PanelConfig, WidgetConfig } from '@/schema/config'
 import { computed } from 'vue'
 import WidgetRenderer from './WidgetRenderer.vue'
 import { panelConfig } from '@/schema/index.ts'

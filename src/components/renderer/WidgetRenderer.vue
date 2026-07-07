@@ -33,11 +33,6 @@ const gridPosition = computed(() => {
   }
 })
 
-const containerStyle = computed(() => ({
-  ...gridPosition.value,
-  ...widgetConfig.value.style,
-}))
-
 function extractDefaults(schemas: PropSchema[] | undefined) {
   if (schemas === undefined) return {}
   const result: Record<string, any> = {}
@@ -176,7 +171,7 @@ onMounted(async () => {
       `widget-${widgetConfig.type}`,
       widgetConfig.class,
     ]"
-    :style="containerStyle"
+    :style="gridPosition"
     v-bind="dragHandlers"
     :draggable="isEditorMode"
     :data-widget-id="widgetId"
@@ -219,7 +214,10 @@ onMounted(async () => {
         v-model:pos="widgetConfig.position"
       />
     </section>
-    <section class="overflow-hidden flex flex-col wh">
+    <section
+      class="overflow-hidden flex flex-col wh"
+      :style="widgetConfig.style as Record<string, any>"
+    >
       <component v-if="widgetDef" :is="widgetDef.component" :widget-props="widgetConfig.props" />
       <div v-else class="widget-loading"><progress-spinner aria-label="loading" /></div>
     </section>
@@ -231,6 +229,9 @@ onMounted(async () => {
   &.is_editor {
     cursor: grab;
     transition: 0.2s;
+
+    border-radius: 1rem;
+    border: 0px dashed red;
   }
 
   &.dragging {
@@ -263,6 +264,9 @@ onMounted(async () => {
 .widget-container.resizing {
   & .resize-handle {
     opacity: 1;
+  }
+  &.is_editor {
+    border-width: 2px;
   }
 }
 

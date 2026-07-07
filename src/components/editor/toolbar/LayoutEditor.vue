@@ -1,25 +1,30 @@
 <script setup lang="ts">
 import { l10n } from '@/localization'
-import { loadLocalSchema, panelConfig, saveLocalSchema } from '@/schema'
-import { propSchemaLayout, type LayoutConfig, type Style } from '@/schema/config'
-import { Button, Dialog } from 'primevue'
-import { computed, onMounted, ref, watch, type Ref } from 'vue'
+import { panelConfig, saveLocalSchema } from '@/schema'
+import { propSchemaLayout } from '@/schema/config'
+import { Button, Dialog, Divider } from 'primevue'
+import { ref } from 'vue'
 import FieldsClassStyle from '../fields/FieldsClassStyle.vue'
 import FieldNumber from '../fields/FieldNumber.vue'
-import { checkRequired } from '@/composable/checkRequired.ts'
+import { checkRequiredArray } from '@/composable/checkRequired.ts'
+import { useDialogSave } from '@/composable/useDialogSave.ts'
 
 const visible = ref(false)
 
-const { arrayRefs, isAll: isSavable } = checkRequired({ amount: 2 })
+const { arrayRefs, isAll: isSavable } = checkRequiredArray(2)
 
 const grThanZero = (x: number) => x > 0
 
-function buttonSave() {
-  if (isSavable.value) {
-    saveLocalSchema()
-    visible.value = false
-  }
+function onSave() {
+  if (isSavable.value) saveLocalSchema()
 }
+
+const { onHideDialog, onShowDialog, onSaveButton } = useDialogSave({
+  isVisible: visible,
+  modelProps: [panelConfig],
+  onSave,
+  onHide: () => console.log(arrayRefs),
+})
 </script>
 
 <template>
@@ -39,11 +44,14 @@ function buttonSave() {
     :style="{ minWidth: '50rem' }"
     :pt="{
       root: { style: { 'box-shadow': 'gray 0px 0px 1em 0.1em' } },
+      content: { class: 'flex flex-col' },
       header: { class: 'cursor-move' },
       mask: { style: { 'background-color': '#0000 !important' } },
     }"
-    @hide="loadLocalSchema"
+    @hide="onHideDialog"
+    @show="onShowDialog"
   >
+    <label class="font-semibold text-sm mb-4">{{ l10n.editor.layout.grid_info }}</label>
     <FieldNumber
       :ref="arrayRefs[0]"
       v-model="panelConfig.layout.columns"
@@ -58,6 +66,8 @@ function buttonSave() {
     />
     <FieldNumber v-model="panelConfig.layout.gap" :prop-schema="propSchemaLayout.gap" />
 
+    <Divider />
+
     <FieldsClassStyle
       v-model:class="panelConfig.layout.class"
       v-model:style="panelConfig.layout.style"
@@ -66,7 +76,7 @@ function buttonSave() {
       <Button severity="secondary" variant="outlined" @click="visible = false">
         {{ l10n.editor.cancel }}
       </Button>
-      <Button @click="buttonSave" :disabled="!isSavable">{{ l10n.editor.apply }}</Button>
+      <Button @click="onSaveButton" :disabled="!isSavable">{{ l10n.editor.apply }}</Button>
     </template>
   </Dialog>
 </template>
