@@ -5,17 +5,14 @@ import { l10n } from '@/localization'
 import { Button, Checkbox, Toolbar } from 'primevue'
 import SchemaUploader from './SchemaUploader.vue'
 import LayoutEditor from './LayoutEditor.vue'
-
-onMounted(async () => {
-  import('../GenericWidgetEditor.vue')
-})
+import WidgetSelect from './WidgetSelect.vue'
 </script>
 
 <template>
   <Toolbar v-if="isEditorMode">
     <template #start>
       <section class="flex flex-row gap-2 items-center">
-        <div>{{ l10n.editor.toolbar.add_widget }}*</div>
+        <WidgetSelect />
         <LayoutEditor />
       </section>
     </template>

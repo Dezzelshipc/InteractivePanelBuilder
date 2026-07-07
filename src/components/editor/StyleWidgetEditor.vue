@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { l10n } from '@/localization'
-import { saveLocalSchema } from '@/schema'
+import { panelConfig, saveLocalSchema } from '@/schema'
 import { propWidgetPosition, type WidgetPosition, type Style } from '@/schema/config'
-import { Button, Dialog, Divider } from 'primevue'
+import { Button, Dialog, Divider, useConfirm } from 'primevue'
 import { ref } from 'vue'
 import FieldsClassStyle from './fields/FieldsClassStyle.vue'
 import { checkRequiredArray } from '@/composable/checkRequired.ts'
 import FieldNumber from './fields/FieldNumber.vue'
 import { useDialogSave } from '@/composable/useDialogSave.ts'
+import { getVal } from '@/utility/index.ts'
 
 const props = defineProps<{
   widgetId: string
@@ -33,6 +34,28 @@ const { onHideDialog, onShowDialog, onSaveButton } = useDialogSave({
   modelProps: [localClass, localStyle, localPosition],
   onSave,
 })
+
+const confirm = useConfirm()
+
+const removeConfirm = () => {
+  confirm.require({
+    message: l10n.value.editor.styles.remove_widget.message,
+    header: l10n.value.editor.styles.remove_widget.header,
+    rejectProps: {
+      label: l10n.value.editor.cancel,
+      severity: 'secondary',
+      outlined: true,
+    },
+    acceptProps: {
+      label: l10n.value.editor.remove,
+      severity: 'danger',
+    },
+    accept: () => {
+      visible.value = false
+      delete panelConfig.value.widgets[props.widgetId]
+    },
+  })
+}
 </script>
 
 <template>
@@ -89,10 +112,19 @@ const { onHideDialog, onShowDialog, onSaveButton } = useDialogSave({
 
     <FieldsClassStyle v-model:class="localClass" v-model:style="localStyle" />
     <template #footer>
-      <Button severity="secondary" variant="outlined" @click="visible = false">
-        {{ l10n.editor.cancel }}
-      </Button>
-      <Button @click="onSaveButton" :disabled="!isSavable">{{ l10n.editor.apply }}</Button>
+      <Button
+        @click="removeConfirm()"
+        severity="danger"
+        variant="outlined"
+        :label="l10n.editor.remove"
+      />
+      <Button
+        @click="visible = false"
+        severity="secondary"
+        variant="outlined"
+        :label="l10n.editor.cancel"
+      />
+      <Button @click="onSaveButton" :disabled="!isSavable" :label="l10n.editor.apply" />
     </template>
   </Dialog>
 </template>

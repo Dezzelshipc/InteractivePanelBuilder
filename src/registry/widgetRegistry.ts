@@ -1,3 +1,4 @@
+import textWidget from '@/components/widgets/text'
 import type { WidgetDefinition, RegisteredWidget } from '@/schema/widget'
 
 class WidgetRegistry {
@@ -24,3 +25,5 @@ class WidgetRegistry {
 }
 
 export const widgetRegistry = new WidgetRegistry()
+
+widgetRegistry.register('text', textWidget)

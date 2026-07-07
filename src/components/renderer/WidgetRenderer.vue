@@ -11,6 +11,7 @@ import { useDragDrop } from '@/composable/useDragDrop'
 import { panelConfig } from '@/schema'
 import { useResize } from '@/composable/useResize'
 import StyleWidgetEditor from '../editor/StyleWidgetEditor.vue'
+import { extractSchemaDefaults } from '@/utility/index.ts'
 
 const props = defineProps<{
   widgetId: string
@@ -21,7 +22,7 @@ const widgetConfig = defineModel<WidgetConfig>('widgetConfig', { required: true 
 const widgetDef = shallowRef(widgetRegistry.get(widgetConfig.value.type))
 
 widgetConfig.value.props = {
-  ...extractDefaults(widgetDef.value?.propsSchema),
+  ...extractSchemaDefaults(widgetDef.value?.propsSchema),
   ...widgetConfig.value.props,
 }
 
@@ -32,17 +33,6 @@ const gridPosition = computed(() => {
     gridRow: `${y + 1} / span ${h}`,
   }
 })
-
-function extractDefaults(schemas: PropSchema[] | undefined) {
-  if (schemas === undefined) return {}
-  const result: Record<string, any> = {}
-  for (const schema of schemas) {
-    if ('default' in schema) {
-      result[schema.name] = schema.default
-    }
-  }
-  return result
-}
 
 function getLayoutParams() {
   const container = document.querySelector('.panel-renderer') as HTMLElement

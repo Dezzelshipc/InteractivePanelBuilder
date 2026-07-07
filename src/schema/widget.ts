@@ -10,7 +10,7 @@ export interface PropSchema {
   required?: boolean
 }
 
-export interface WidgetDefinition<TClass = string[], TStyle = Style> {
+export interface WidgetDefinition {
   component: Component
   editor?: Component
 
@@ -19,8 +19,8 @@ export interface WidgetDefinition<TClass = string[], TStyle = Style> {
   label: string
   icon?: string
 
-  defaultClass?: Partial<TClass>
-  defaultStyle?: Partial<TStyle>
+  defaultClass?: string
+  defaultStyle?: Style
 }
 
 export interface RegisteredWidget extends WidgetDefinition {
@@ -41,7 +41,7 @@ export const selectAlignX: Align = {
     { value: 1, label: 'fields.select.align.center', icon: 'pi pi-align-center' },
     { value: 2, label: 'fields.select.align.right', icon: 'pi pi-align-right' },
   ],
-  default: 0,
+  default: 1,
   required: true,
 }
 
@@ -52,6 +52,6 @@ export const selectAlignY: Align = {
     { value: 1, label: 'fields.select.align.center', icon: 'pi pi-bars' },
     { value: 2, label: 'fields.select.align.bottom', icon: 'pi pi-caret-down' },
   ],
-  default: 0,
+  default: 1,
   required: true,
 }

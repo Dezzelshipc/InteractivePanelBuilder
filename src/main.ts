@@ -10,6 +10,8 @@ import 'primeicons/primeicons.css'
 import ToastService from 'primevue/toastservice'
 import Tooltip from 'primevue/tooltip'
 
+import ConfirmationService from 'primevue/confirmationservice'
+
 import '@/utility/bandaid.js'
 
 const app = createApp(App)
@@ -21,6 +23,10 @@ app.use(PrimeVue, {
     },
   },
 })
+
 app.use(ToastService)
 app.directive('tooltip', Tooltip)
+
+app.use(ConfirmationService)
+
 app.mount('#app')

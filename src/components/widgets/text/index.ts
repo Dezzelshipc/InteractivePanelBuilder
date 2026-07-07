@@ -1,10 +1,7 @@
-import { defineAsyncComponent } from 'vue'
 import { selectAlignX, selectAlignY, type WidgetDefinition } from '@/schema/widget'
 
-const TextWidget = defineAsyncComponent(() => import('./TextWidget.vue'))
-const GenericWidgetEditor = defineAsyncComponent(
-  () => import('@/components/editor/GenericWidgetEditor.vue'),
-)
+import TextWidget from './TextWidget.vue'
+import GenericWidgetEditor from '@/components/editor/GenericWidgetEditor.vue'
 
 export interface TextWidgetProps {
   title: string
@@ -17,7 +14,7 @@ export interface TextWidgetProps {
 export const textWidget: WidgetDefinition = {
   component: TextWidget,
   editor: GenericWidgetEditor,
-  label: 'Текст',
+  label: 'widgets.text.label',
   icon: '📃',
   propsSchema: [
     {
@@ -49,8 +46,9 @@ export const textWidget: WidgetDefinition = {
     },
   ],
   defaultStyle: {
+    border: '2px solid black',
     borderRadius: '8px',
-    padding: '12px',
+    padding: '10px',
   },
 }
 

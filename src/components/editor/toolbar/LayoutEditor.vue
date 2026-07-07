@@ -23,7 +23,6 @@ const { onHideDialog, onShowDialog, onSaveButton } = useDialogSave({
   isVisible: visible,
   modelProps: [panelConfig],
   onSave,
-  onHide: () => console.log(arrayRefs),
 })
 </script>
 

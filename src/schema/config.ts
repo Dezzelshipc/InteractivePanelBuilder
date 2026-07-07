@@ -6,7 +6,9 @@ export interface PanelConfig {
   widgets: Record<string, WidgetConfig>
 }
 
-export type Style = { [index: string]: string | number | boolean }
+export interface Style {
+  [index: string]: string | number | boolean
+}
 
 export interface LayoutConfig {
   columns: number
