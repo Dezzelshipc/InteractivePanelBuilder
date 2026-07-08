@@ -1,22 +1,28 @@
 <script setup lang="ts">
 import { l10n } from '@/localization'
 import { panelConfig, saveLocalSchema } from '@/schema'
-import { propSchemaLayout } from '@/schema/config'
+import { propSchemaLayout, propWebSocketServer } from '@/schema/config'
 import { Button, Dialog, Divider } from 'primevue'
 import { ref } from 'vue'
 import FieldsClassStyle from '../fields/FieldsClassStyle.vue'
 import FieldNumber from '../fields/FieldNumber.vue'
 import { checkRequiredArray } from '@/composable/checkRequired.ts'
 import { useDialogSave } from '@/composable/useDialogSave.ts'
+import FieldString from '../fields/FieldString.vue'
 
 const visible = ref(false)
+
+const webSocketServer = ref(panelConfig.value.webSocketServer ?? '')
 
 const { arrayRefs, isAll: isSavable } = checkRequiredArray(2)
 
 const grThanZero = (x: number) => x > 0
 
 function onSave() {
-  if (isSavable.value) saveLocalSchema()
+  if (isSavable.value) {
+    saveLocalSchema()
+    panelConfig.value.webSocketServer = webSocketServer.value
+  }
 }
 
 const { onHideDialog, onShowDialog, onSaveButton } = useDialogSave({
@@ -64,6 +70,10 @@ const { onHideDialog, onShowDialog, onSaveButton } = useDialogSave({
       :validator="grThanZero"
     />
     <FieldNumber v-model="panelConfig.layout.gap" :prop-schema="propSchemaLayout.gap" />
+
+    <Divider />
+
+    <FieldString v-model="webSocketServer" :prop-schema="propWebSocketServer" />
 
     <Divider />
 

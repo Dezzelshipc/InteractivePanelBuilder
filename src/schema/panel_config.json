@@ -36,6 +36,9 @@
         "version": {
           "type": "string"
         },
+        "webSocketServer": {
+          "type": "string"
+        },
         "widgets": {
           "additionalProperties": {
             "$ref": "#/definitions/WidgetConfig"

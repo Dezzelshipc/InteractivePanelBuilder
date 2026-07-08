@@ -55,7 +55,7 @@ const { onHideDialog, onShowDialog, onSaveButton } = useDialogSave({
     @show="onShowDialog"
   >
     <component
-      v-for="[i, propSchema] of propSchemas.entries()"
+      v-for="propSchema of propSchemas"
       ref="arrayRefs"
       :key="propSchema.name"
       :is="fieldsRegistry.get(propSchema.type)"

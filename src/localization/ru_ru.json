@@ -5,7 +5,9 @@
   },
   "editor": {
     "props": {
-      "label": "Свойства"
+      "label": "Свойства",
+
+      "webSocketServer": "Сервер для WebSockets"
     },
 
     "styles": {
@@ -85,7 +87,11 @@
     }
   },
   "widgets": {
-    "text": {
+    "generic": {
+      "dataSource": "Топик WebSockets для виджета",
+      "dataSource_info": "Топик WebSockets на сервере, объявленном в конфиге панели, который отправляет JSON всего данного виджета."
+    },
+    "full_text": {
       "label": "Текст",
 
       "title": "Заголовок",

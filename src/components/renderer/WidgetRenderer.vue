@@ -2,7 +2,7 @@
 import { loadWidget } from '@/registry/loadWidget'
 import { widgetRegistry } from '@/registry/widgetRegistry'
 import type { WidgetConfig, WidgetPosition } from '@/schema/config'
-import { computed, onMounted, shallowRef } from 'vue'
+import { computed, onMounted, shallowRef, watch } from 'vue'
 
 import { ProgressSpinner } from 'primevue'
 import type { PropSchema } from '@/schema/widget'
@@ -12,6 +12,7 @@ import { panelConfig } from '@/schema'
 import { useResize } from '@/composable/useResize'
 import StyleWidgetEditor from '../editor/StyleWidgetEditor.vue'
 import { extractSchemaDefaults } from '@/utility/index.ts'
+import { useWidgetData } from '@/composable/useWidgetData.ts'
 
 const props = defineProps<{
   widgetId: string
@@ -145,6 +146,18 @@ const { isResizing, handleMouseDown } = useResize({
   },
 })
 
+const { data, error } = useWidgetData(widgetConfig.value.props.dataSource, 200)
+
+watch(
+  () => data.value,
+  () => {
+    const widget = panelConfig.value.widgets[props.widgetId]
+    if (widget) {
+      panelConfig.value.widgets[props.widgetId] = data.value
+    }
+  },
+)
+
 onMounted(async () => {
   if (!widgetDef.value) {
     await loadWidget(widgetConfig.value.type)
@@ -209,6 +222,7 @@ onMounted(async () => {
       :style="widgetConfig.style as Record<string, any>"
     >
       <component v-if="widgetDef" :is="widgetDef.component" :widget-props="widgetConfig.props" />
+
       <div v-else class="widget-loading"><progress-spinner aria-label="loading" /></div>
     </section>
   </div>

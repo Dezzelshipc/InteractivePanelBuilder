@@ -3,7 +3,7 @@ import { checkValid } from '@/composable/checkRequired'
 import { l10n } from '@/localization'
 import type { PropSchema } from '@/schema/widget'
 import { getVal } from '@/utility'
-import { InputText } from 'primevue'
+import { Textarea } from 'primevue'
 
 const props = defineProps<{
   propSchema: PropSchema
@@ -28,14 +28,8 @@ defineExpose({ isValid })
     <label :for="propSchema.name" class="font-semibold w-24 text-sm">
       {{ getVal(l10n, propSchema.label, propSchema.name) }}
       <span v-if="propSchema.required" style="color: red" v-tooltip="l10n.editor.required">*</span>
-      <span
-        v-if="propSchema.info"
-        style="color: green"
-        v-tooltip="getVal(l10n, propSchema.info, `info not defined: ${propSchema.info}`)"
-        >?</span
-      >
     </label>
-    <InputText
+    <Textarea
       :id="propSchema.name"
       class="flex-auto"
       autocomplete="off"

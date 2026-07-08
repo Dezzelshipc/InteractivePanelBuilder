@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { TextWidgetProps } from '.'
+import type { FullTextWidgetProps } from '.'
 
 const props = defineProps<{
-  widgetProps: TextWidgetProps
+  widgetProps: FullTextWidgetProps
 }>()
 
 function alignX(value: number) {

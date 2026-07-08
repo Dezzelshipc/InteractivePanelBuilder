@@ -4,7 +4,8 @@ import type { Style } from './config'
 export interface PropSchema {
   name: string
   label: string
-  type: 'string' | 'number' | 'boolean' | 'select' | 'dataSource' | 'color' | 'object'
+  info?: string
+  type: 'string' | 'text' | 'number' | 'boolean' | 'select' | 'dataSource' | 'color' | 'object'
   options?: { value: any; label: string; icon?: string }[]
   default?: any
   required?: boolean
@@ -54,4 +55,11 @@ export const selectAlignY: Align = {
   ],
   default: 1,
   required: true,
+}
+
+export const propDataSource: PropSchema = {
+  name: 'dataSource',
+  label: 'widgets.generic.dataSource',
+  info: 'widgets.generic.dataSource_info',
+  type: 'dataSource',
 }

@@ -1,4 +1,4 @@
-import textWidget from '@/components/widgets/text'
+import fullTextWidget from '@/components/widgets/fullText'
 import type { WidgetDefinition, RegisteredWidget } from '@/schema/widget'
 
 class WidgetRegistry {
@@ -26,4 +26,4 @@ class WidgetRegistry {
 
 export const widgetRegistry = new WidgetRegistry()
 
-widgetRegistry.register('text', textWidget)
+widgetRegistry.register('full_text', fullTextWidget)

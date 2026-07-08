@@ -4,6 +4,7 @@ export interface PanelConfig {
   version: string
   layout: LayoutConfig
   widgets: Record<string, WidgetConfig>
+  webSocketServer?: string
 }
 
 export interface Style {
@@ -112,4 +113,10 @@ export const propWidgetPosition: { [k in keyof Required<WidgetPosition>]: PropSc
     default: 1,
     required: true,
   },
+}
+
+export const propWebSocketServer: PropSchema = {
+  name: 'dataSource',
+  label: 'editor.props.webSocketServer',
+  type: 'dataSource',
 }
