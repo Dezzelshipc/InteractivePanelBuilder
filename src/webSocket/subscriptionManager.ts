@@ -4,14 +4,26 @@ import type { MessageHandler, WebSocketManager } from './webSocketManager'
 type Callback = (data: any) => void
 
 export class SubscriptionManager {
-  private ws: WebSocketManager
+  private ws?: WebSocketManager
   private cache = new Map<string, any>()
   private debounceTimers = new Map<string, number>()
   private pendingCallbacks = new Map<string, Set<Callback>>()
   private messageHandlers = new Map<string, MessageHandler>()
 
-  constructor(ws: WebSocketManager) {
+  constructor() {}
+
+  public setManager(ws: WebSocketManager) {
     this.ws = ws
+    for (const [topic, handler] of this.messageHandlers.entries()) {
+      this.ws.subscribe(topic, handler)
+    }
+  }
+
+  public removeManager() {
+    for (const [topic, handler] of this.messageHandlers.entries()) {
+      this.ws?.unsubscribe(topic, handler)
+    }
+    this.ws = undefined
   }
 
   public subscribe(topic: string, callback: Callback, debounceMs = 0) {
@@ -40,7 +52,7 @@ export class SubscriptionManager {
           callbacks?.forEach((cb) => cb(payload))
         }
       }
-      this.ws.subscribe(topic, messageHandler)
+      this.ws?.subscribe(topic, messageHandler)
       this.messageHandlers.set(topic, messageHandler)
     }
   }
@@ -53,7 +65,7 @@ export class SubscriptionManager {
         this.pendingCallbacks.delete(topic)
         const messageHandler = this.messageHandlers.get(topic)
         if (messageHandler) {
-          this.ws.unsubscribe(topic, messageHandler)
+          this.ws?.unsubscribe(topic, messageHandler)
           this.messageHandlers.delete(topic)
         }
       }
@@ -61,4 +73,4 @@ export class SubscriptionManager {
   }
 }
 
-export const subscriptionManager = ref<SubscriptionManager>()
+export const subscriptionManager = new SubscriptionManager()

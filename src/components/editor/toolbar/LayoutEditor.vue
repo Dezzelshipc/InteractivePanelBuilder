@@ -12,7 +12,7 @@ import FieldString from '../fields/FieldString.vue'
 
 const visible = ref(false)
 
-const webSocketServer = ref(panelConfig.value.webSocketServer ?? '')
+const webSocketServer = ref()
 
 const { arrayRefs, isAll: isSavable } = checkRequiredArray(2)
 
@@ -20,8 +20,8 @@ const grThanZero = (x: number) => x > 0
 
 function onSave() {
   if (isSavable.value) {
-    saveLocalSchema()
     panelConfig.value.webSocketServer = webSocketServer.value
+    saveLocalSchema()
   }
 }
 
@@ -29,6 +29,7 @@ const { onHideDialog, onShowDialog, onSaveButton } = useDialogSave({
   isVisible: visible,
   modelProps: [panelConfig],
   onSave,
+  onShow: () => (webSocketServer.value = panelConfig.value.webSocketServer),
 })
 </script>
 

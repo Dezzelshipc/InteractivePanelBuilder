@@ -1,6 +1,14 @@
 import type { Component } from 'vue'
 import type { Style } from './config'
 
+export interface WidgetSource {
+  widgetSource?: string
+}
+
+export interface DataSource {
+  dataSource?: string
+}
+
 export interface PropSchema {
   name: string
   label: string
@@ -61,5 +69,12 @@ export const propDataSource: PropSchema = {
   name: 'dataSource',
   label: 'widgets.generic.dataSource',
   info: 'widgets.generic.dataSource_info',
+  type: 'dataSource',
+}
+
+export const propWidgetSource: PropSchema = {
+  name: 'widgetSource',
+  label: 'widgets.generic.widgetSource',
+  info: 'widgets.generic.widgetSource_info',
   type: 'dataSource',
 }

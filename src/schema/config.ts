@@ -1,4 +1,4 @@
-import type { PropSchema } from './widget'
+import type { DataSource, PropSchema, WidgetSource } from './widget'
 
 export interface PanelConfig {
   version: string
@@ -29,7 +29,7 @@ export interface WidgetPosition {
 export interface WidgetConfig {
   type: string
   position: WidgetPosition
-  props?: Record<string, any>
+  props?: Record<string, any> & DataSource & WidgetSource
   class?: string
   style?: Style
 }

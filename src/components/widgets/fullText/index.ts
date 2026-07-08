@@ -2,21 +2,21 @@ import { selectAlignX, selectAlignY, type WidgetDefinition } from '@/schema/widg
 
 import FullTextWidget from './FullTextWidget.vue'
 import GenericWidgetEditor from '@/components/editor/GenericWidgetEditor.vue'
-import { propDataSource } from '@/schema/widget'
+import { propWidgetSource, type WidgetSource } from '@/schema/widget'
 
-export interface FullTextWidgetProps {
+export type FullTextWidgetProps = {
   title: string
   title_align: 0 | 1 | 2
   text: string
   text_align: 0 | 1 | 2
   self_align: 0 | 1 | 2
-}
+} & WidgetSource
 
 export const fullTextWidget: WidgetDefinition = {
   component: FullTextWidget,
   editor: GenericWidgetEditor,
   label: 'widgets.full_text.label',
-  icon: '📃',
+  icon: '📃📃',
   propsSchema: [
     {
       name: 'title',
@@ -45,7 +45,7 @@ export const fullTextWidget: WidgetDefinition = {
       label: 'widgets.full_text.self_align',
       ...selectAlignY,
     },
-    propDataSource,
+    propWidgetSource,
   ],
   defaultStyle: {
     border: '2px solid black',

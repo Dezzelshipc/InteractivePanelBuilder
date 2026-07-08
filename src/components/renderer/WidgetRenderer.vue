@@ -5,14 +5,13 @@ import type { WidgetConfig, WidgetPosition } from '@/schema/config'
 import { computed, onMounted, shallowRef, watch } from 'vue'
 
 import { ProgressSpinner } from 'primevue'
-import type { PropSchema } from '@/schema/widget'
 import { isEditorMode } from '../editor/editorController'
 import { useDragDrop } from '@/composable/useDragDrop'
 import { panelConfig } from '@/schema'
 import { useResize } from '@/composable/useResize'
 import StyleWidgetEditor from '../editor/StyleWidgetEditor.vue'
 import { extractSchemaDefaults } from '@/utility/index.ts'
-import { useWidgetData } from '@/composable/useWidgetData.ts'
+import { useWebData } from '@/composable/useWidgetData.ts'
 
 const props = defineProps<{
   widgetId: string
@@ -146,13 +145,14 @@ const { isResizing, handleMouseDown } = useResize({
   },
 })
 
-const { data, error } = useWidgetData(widgetConfig.value.props.dataSource, 200)
+const { data } = useWebData(() => widgetConfig.value.props?.widgetSource, 200)
 
 watch(
   () => data.value,
   () => {
     const widget = panelConfig.value.widgets[props.widgetId]
     if (widget) {
+      data.value.props.widgetSource = widget.props?.widgetSource
       panelConfig.value.widgets[props.widgetId] = data.value
     }
   },

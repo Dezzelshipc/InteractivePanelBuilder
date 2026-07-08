@@ -14,6 +14,10 @@ export class WebSocketManager {
 
   public isConnected = ref(false)
 
+  public getUrl() {
+    return this.url
+  }
+
   constructor(url: string) {
     this.url = url
     this.connect()
@@ -51,7 +55,7 @@ export class WebSocketManager {
   }
 
   private reconnect() {
-    if (this.reconnectAttempts >= this.maxReconnectAttempts) return
+    if (this.reconnectAttempts >= this.maxReconnectAttempts || !this.ws) return
     const delay = Math.min(30000, this.reconnectDelay * Math.pow(2, this.reconnectAttempts))
     setTimeout(() => {
       this.reconnectAttempts++
@@ -112,5 +116,24 @@ export class WebSocketManager {
     this.stopHeartbeat()
     this.ws?.close()
     this.ws = null
+  }
+}
+
+let wsManager: WebSocketManager | null = null
+
+export function getWebSocketManager(url: string) {
+  if (!wsManager) {
+    wsManager = new WebSocketManager(url)
+  } else if (url && wsManager.getUrl() !== url) {
+    wsManager.destroy()
+    wsManager = new WebSocketManager(url)
+  }
+  return wsManager
+}
+
+export function deleteWebSocketManager() {
+  if (wsManager) {
+    wsManager.destroy()
+    wsManager = null
   }
 }

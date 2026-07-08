@@ -1,23 +1,29 @@
-import { ref, watch } from 'vue'
+import { ref, toValue, unref, watch } from 'vue'
 import { get_default_panel_config, type PanelConfig } from './config'
 import { SubscriptionManager, subscriptionManager } from '@/webSocket/subscriptionManager'
-import { WebSocketManager } from '@/webSocket/webSocketManager'
+import { deleteWebSocketManager, getWebSocketManager } from '@/webSocket/webSocketManager'
+import { isEditorMode } from '@/components/editor/editorController'
 
 export const panelConfig = ref(get_default_panel_config())
 
-watch(
-  () => panelConfig.value.webSocketServer,
-  () => {
-    const server = panelConfig.value.webSocketServer
-    if (!server || server == null || server.length === 0) {
-      subscriptionManager.value = undefined
-      console.log('Not connected to any web socket server')
-      return
-    }
-    subscriptionManager.value = new SubscriptionManager(new WebSocketManager(server))
+watch(isEditorMode, (is_editor) => {
+  const server = panelConfig.value.webSocketServer
+
+  if (is_editor) {
+    subscriptionManager.removeManager()
+    deleteWebSocketManager()
+
+    loadLocalSchema()
+    console.log('Loaded saved panel state')
+
+    console.log('Disconnected from web socket server')
+  } else if (server) {
+    subscriptionManager.setManager(getWebSocketManager(server))
     console.log('Connected to web socket server')
-  },
-)
+  } else {
+    console.log('Not connected to any web socket server')
+  }
+})
 
 export const localSchemaKey = 'InteractiveSchemaPanelConfig'
 export function saveLocalSchema() {
