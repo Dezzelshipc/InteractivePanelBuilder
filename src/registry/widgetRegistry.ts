@@ -1,5 +1,6 @@
 import fullTextWidget from '@/components/widgets/fullText'
 import textWidget from '@/components/widgets/text'
+import videoWidget from '@/components/widgets/video'
 import type { WidgetDefinition, RegisteredWidget } from '@/schema/widget'
 
 class WidgetRegistry {
@@ -29,3 +30,5 @@ export const widgetRegistry = new WidgetRegistry()
 
 widgetRegistry.register('full_text', fullTextWidget)
 widgetRegistry.register('text', textWidget)
+
+widgetRegistry.register('video', videoWidget)

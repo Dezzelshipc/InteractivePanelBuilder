@@ -63,8 +63,7 @@ const removeConfirm = () => {
     class="edit-button"
     icon="pi pi-palette"
     @click="visible = true"
-    severity="contrast"
-    variant="outlined"
+    severity="info"
     raised
     v-tooltip="l10n.editor.styles.label"
   />

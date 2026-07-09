@@ -34,8 +34,7 @@ const { onHideDialog, onShowDialog, onSaveButton } = useDialogSave({
     class="edit-button"
     icon="pi pi-cog"
     @click="visible = true"
-    severity="contrast"
-    variant="outlined"
+    severity="info"
     raised
     v-tooltip="l10n.editor.props.label"
   />

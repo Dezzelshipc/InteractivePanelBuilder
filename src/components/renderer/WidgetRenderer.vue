@@ -7,7 +7,7 @@ import { computed, onMounted, shallowRef, watch } from 'vue'
 import { ProgressSpinner } from 'primevue'
 import { isEditorMode } from '../editor/editorController'
 import { useDragDrop } from '@/composable/useDragDrop'
-import { panelConfig } from '@/schema'
+import { panelConfig, saveLocalSchema } from '@/schema'
 import { useResize } from '@/composable/useResize'
 import StyleWidgetEditor from '../editor/StyleWidgetEditor.vue'
 import { extractSchemaDefaults } from '@/utility/index.ts'
@@ -72,6 +72,7 @@ const { isDragging, dragHandlers } = useDragDrop({
     const widget = panelConfig.value.widgets[props.widgetId]
     if (widget) {
       widget.position = { ...widget.position, x: clampedX, y: clampedY, w, h }
+      saveLocalSchema()
     }
   },
 })
@@ -141,6 +142,7 @@ const { isResizing, handleMouseDown } = useResize({
     const widget = panelConfig.value.widgets[props.widgetId]
     if (widget) {
       widget.position = { ...widget.position, x: newX, y: newY, w: newW, h: newH }
+      saveLocalSchema()
     }
   },
 })
@@ -164,6 +166,12 @@ onMounted(async () => {
     widgetDef.value = widgetRegistry.get(widgetConfig.value.type)
   }
 })
+
+function zIndexStyle(diff: number) {
+  const zIndex = widgetConfig.value.style?.['z-index'] || widgetConfig.value.style?.['zIndex']
+  if (zIndex) return { zIndex: Number(zIndex) + diff }
+  return {}
+}
 </script>
 
 <template>
@@ -174,7 +182,7 @@ onMounted(async () => {
       `widget-${widgetConfig.type}`,
       widgetConfig.class,
     ]"
-    :style="gridPosition"
+    :style="[gridPosition, zIndexStyle(-1)]"
     v-bind="dragHandlers"
     :draggable="isEditorMode"
     :data-widget-id="widgetId"
@@ -194,6 +202,7 @@ onMounted(async () => {
         :key="dir"
         class="resize-handle"
         :class="`handle-${dir}`"
+        :style="zIndexStyle(2)"
         @mousedown="handleMouseDown(dir, $event)"
         @mouseup.stop
         @click.stop
@@ -201,6 +210,7 @@ onMounted(async () => {
     </template>
     <section
       class="absolute top-1 right-1 flex flex-col items-center gap-1 opacity-90"
+      :style="zIndexStyle(1)"
       v-if="isEditorMode"
     >
       <component
@@ -218,7 +228,7 @@ onMounted(async () => {
       />
     </section>
     <section
-      class="overflow-hidden flex flex-col wh"
+      class="overflow-auto flex flex-col wh"
       :style="widgetConfig.style as Record<string, any>"
     >
       <component v-if="widgetDef" :is="widgetDef.component" :widget-props="widgetConfig.props" />
@@ -230,6 +240,14 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 .widget-container {
+  max-width: 100%;
+  max-height: 100%;
+
+  min-width: 0;
+  min-height: 0;
+
+  box-sizing: border-box;
+
   &.is_editor {
     cursor: grab;
     transition: 0.2s;

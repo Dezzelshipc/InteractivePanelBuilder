@@ -42,6 +42,7 @@ function beforeShow() {
     @before-show="beforeShow"
   >
     <template #value>
+      <i class="pi pi-folder" />
       {{ l10n.editor.toolbar.add_widget }}
     </template>
 

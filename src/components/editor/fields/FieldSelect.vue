@@ -48,7 +48,9 @@ defineExpose({ isValid })
         <div class="flex items-center gap-3 py-1">
           <i :class="[slotProps.option.icon]" />
           <div class="flex flex-col">
-            <span class="font-medium">{{ getVal(l10n, slotProps.option.label, '') }}</span>
+            <span class="font-medium">
+              {{ getVal(l10n, slotProps.option.label, slotProps.option.value) }}
+            </span>
             <span class="text-xs text-surface-500">{{ slotProps.option.description }}</span>
           </div>
         </div>

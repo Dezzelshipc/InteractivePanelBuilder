@@ -12,6 +12,7 @@ const gridStyle = computed(() => ({
   gridTemplateColumns: `repeat(${config.value.layout.columns}, 1fr)`,
   gridTemplateRows: `repeat(${config.value.layout.rows}, 1fr)`,
   gap: `${config.value.layout.gap}px`,
+  zIndex: -1000,
   ...config.value.layout.style,
 }))
 </script>
