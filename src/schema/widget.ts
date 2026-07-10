@@ -1,22 +1,28 @@
 import type { Component } from 'vue'
 import type { Style } from './config'
 
+export type WebSocketConfig = {
+  url: string
+  topic: string
+}
+
 export interface WidgetSource {
-  widgetSource?: string
+  widgetSource: WebSocketConfig | null
 }
 
 export interface DataSource {
-  dataSource?: string
+  dataSource: WebSocketConfig | null
 }
 
 export interface PropSchema {
   name: string
   label: string
   info?: string
-  type: 'string' | 'text' | 'number' | 'boolean' | 'select' | 'dataSource' | 'color' | 'object'
+  type: 'string' | 'text' | 'number' | 'boolean' | 'select' | 'dataSource' | 'object'
   options?: { value: any; label: string; icon?: string }[]
   default?: any
   required?: boolean
+  additional?: Record<string, any>
 }
 
 export interface WidgetDefinition {
@@ -37,7 +43,7 @@ export interface RegisteredWidget extends WidgetDefinition {
 }
 
 export interface Align {
-  type: 'string' | 'number' | 'boolean' | 'select' | 'dataSource' | 'color'
+  type: 'select'
   options: { value: any; label: string; icon?: string; description?: string }[]
   default: any
   required: boolean
@@ -70,6 +76,10 @@ export const propDataSource: PropSchema = {
   label: 'widgets.generic.dataSource',
   info: 'widgets.generic.dataSource_info',
   type: 'dataSource',
+  additional: {
+    label2: 'widgets.generic.dataSource_topic',
+  },
+  default: null,
 }
 
 export const propWidgetSource: PropSchema = {
@@ -77,4 +87,8 @@ export const propWidgetSource: PropSchema = {
   label: 'widgets.generic.widgetSource',
   info: 'widgets.generic.widgetSource_info',
   type: 'dataSource',
+  additional: {
+    label2: 'widgets.generic.dataSource_topic',
+  },
+  default: null,
 }

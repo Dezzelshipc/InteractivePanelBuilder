@@ -4,7 +4,6 @@ export interface PanelConfig {
   version: string
   layout: LayoutConfig
   widgets: Record<string, WidgetConfig>
-  webSocketServer?: string
 }
 
 export interface Style {
@@ -29,7 +28,7 @@ export interface WidgetPosition {
 export interface WidgetConfig {
   type: string
   position: WidgetPosition
-  props?: Record<string, any> & DataSource & WidgetSource
+  props: Record<string, any> & DataSource & WidgetSource
   class?: string
   style?: Style
 }
@@ -115,8 +114,6 @@ export const propWidgetPosition: { [k in keyof Required<WidgetPosition>]: PropSc
   },
 }
 
-export const propWebSocketServer: PropSchema = {
-  name: 'dataSource',
-  label: 'editor.props.webSocketServer',
-  type: 'dataSource',
+export const defaultStyle = {
+  'z-index': 100,
 }

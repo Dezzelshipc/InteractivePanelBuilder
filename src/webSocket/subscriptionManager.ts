@@ -1,5 +1,10 @@
 import { ref } from 'vue'
-import type { MessageHandler, WebSocketManager } from './webSocketManager'
+import {
+  deleteWebSocketManager,
+  getWebSocketManager,
+  type MessageHandler,
+  type WebSocketManager,
+} from './webSocketManager'
 
 type Callback = (data: any) => void
 
@@ -73,4 +78,26 @@ export class SubscriptionManager {
   }
 }
 
-export const subscriptionManager = new SubscriptionManager()
+let subscriptionManagers: Map<string, SubscriptionManager> = new Map()
+
+export function getSubscriptionManager(url: string) {
+  if (!subscriptionManagers.has(url)) subscriptionManagers.set(url, new SubscriptionManager())
+  return subscriptionManagers.get(url)!
+}
+
+export function deleteSubscriptionManager(url: string) {
+  if (subscriptionManagers.has(url)) subscriptionManagers.delete(url)
+}
+
+export function startSubscriptionManagers() {
+  for (const [url, manager] of subscriptionManagers.entries()) {
+    manager.setManager(getWebSocketManager(url))
+  }
+}
+
+export function stopSubscriptionManagers() {
+  for (const [url, manager] of subscriptionManagers.entries()) {
+    manager.removeManager()
+    deleteWebSocketManager(url)
+  }
+}

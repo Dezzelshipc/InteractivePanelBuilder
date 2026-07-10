@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import type { TextWidgetProps } from '.'
-import { useWebData } from '@/composable/useWidgetData'
-import { isEditorMode, isPanelMode } from '@/components/editor/editorController'
+import { useWebSocket } from '@/composable/useWebSocket'
+import { isEditorMode } from '@/components/editor/editorController'
 
 const props = defineProps<{
   widgetProps: TextWidgetProps
@@ -16,7 +16,7 @@ function alignY(value: number) {
   return ['justify-start', 'justify-center', 'justify-end'][value]
 }
 
-const { data } = useWebData(() => props.widgetProps.dataSource, 200)
+const { data } = useWebSocket(() => props.widgetProps.dataSource, 200)
 
 const showText = computed(() => {
   if (!isEditorMode.value && data.value) return data.value
@@ -28,6 +28,7 @@ const showText = computed(() => {
   <div :class="[alignY(widgetProps.y_align), 'wh flex flex-col']">
     <p v-if="props.widgetProps.text" :class="[alignX(widgetProps.x_align), 'whitespace-pre-line']">
       {{ showText }}
+      {{ props.widgetProps.dataSource }}
     </p>
   </div>
 </template>

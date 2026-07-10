@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { l10n } from '@/localization'
 import { panelConfig, saveLocalSchema } from '@/schema'
-import { propSchemaLayout, propWebSocketServer } from '@/schema/config'
+import { propSchemaLayout } from '@/schema/config'
 import { Button, Dialog, Divider } from 'primevue'
 import { ref } from 'vue'
 import FieldsClassStyle from '../fields/FieldsClassStyle.vue'
@@ -20,7 +20,6 @@ const grThanZero = (x: number) => x > 0
 
 function onSave() {
   if (isSavable.value) {
-    panelConfig.value.webSocketServer = webSocketServer.value
     saveLocalSchema()
   }
 }
@@ -29,7 +28,6 @@ const { onHideDialog, onShowDialog, onSaveButton } = useDialogSave({
   isVisible: visible,
   modelProps: [panelConfig],
   onSave,
-  onShow: () => (webSocketServer.value = panelConfig.value.webSocketServer),
 })
 </script>
 
@@ -71,10 +69,6 @@ const { onHideDialog, onShowDialog, onSaveButton } = useDialogSave({
       :validator="grThanZero"
     />
     <FieldNumber v-model="panelConfig.layout.gap" :prop-schema="propSchemaLayout.gap" />
-
-    <Divider />
-
-    <FieldString v-model="webSocketServer" :prop-schema="propWebSocketServer" />
 
     <Divider />
 

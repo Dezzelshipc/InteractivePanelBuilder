@@ -88,11 +88,13 @@
   },
   "widgets": {
     "generic": {
-      "widgetSource": "Топик WebSockets для виджета",
-      "widgetSource_info": "Топик WebSockets на сервере, объявленном в конфиге панели, который отправляет JSON всего данного виджета. Этот параметр не может меняться с помощью WebSockets",
+      "widgetSource": "Сервер WebSockets для виджета",
+      "widgetSource_info": "Сервер WebSockets, топик которого отправляет JSON всего данного виджета. Этот параметр не может меняться с помощью WebSockets",
 
-      "dataSource": "Топик WebSockets для значения",
-      "dataSource_info": "Топик WebSockets на сервере, объявленном в конфиге панели, который отправляет только значение основного поля виджета.",
+      "dataSource": "Сервер WebSockets для значения",
+      "dataSource_info": "Сервер WebSockets, топик которого отправляет только значение основного поля виджета.",
+
+      "dataSource_topic": "Топик",
 
       "x_align": "Горизонтальное положение",
       "y_align": "Вертикальное положение"

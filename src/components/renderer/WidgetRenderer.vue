@@ -11,7 +11,7 @@ import { panelConfig, saveLocalSchema } from '@/schema'
 import { useResize } from '@/composable/useResize'
 import StyleWidgetEditor from '../editor/StyleWidgetEditor.vue'
 import { extractSchemaDefaults } from '@/utility/index.ts'
-import { useWebData } from '@/composable/useWidgetData.ts'
+import { useWebSocket } from '@/composable/useWebSocket.ts'
 
 const props = defineProps<{
   widgetId: string
@@ -147,17 +147,22 @@ const { isResizing, handleMouseDown } = useResize({
   },
 })
 
-const { data } = useWebData(() => widgetConfig.value.props?.widgetSource, 200)
+const { data: wsWidgetProps } = useWebSocket(() => widgetConfig.value.props.widgetSource, 200)
 
 watch(
-  () => data.value,
+  wsWidgetProps,
   () => {
     const widget = panelConfig.value.widgets[props.widgetId]
     if (widget) {
-      data.value.props.widgetSource = widget.props?.widgetSource
-      panelConfig.value.widgets[props.widgetId] = data.value
+      wsWidgetProps.value.props.widgetSource = widget.props?.widgetSource
+      panelConfig.value.widgets[props.widgetId] = wsWidgetProps.value
     }
+    // panelConfig.value.widgets[props.widgetId] = {
+    //   ...wsWidgetProps.value,
+    //   widgetSource: panelConfig.value.widgets[props.widgetId]?.props.widgetSource,
+    // }
   },
+  { deep: true },
 )
 
 onMounted(async () => {

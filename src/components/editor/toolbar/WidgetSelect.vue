@@ -2,6 +2,7 @@
 import { l10n } from '@/localization'
 import { widgetRegistry } from '@/registry/widgetRegistry'
 import { panelConfig, saveLocalSchema } from '@/schema'
+import { defaultStyle } from '@/schema/config'
 import { extractSchemaDefaults, getRandomInt, getVal } from '@/utility'
 import { Select, type SelectChangeEvent } from 'primevue'
 import { ref } from 'vue'
@@ -17,13 +18,15 @@ function change(event: SelectChangeEvent) {
     widgetId = `${t}-${getRandomInt(0, 1e10)}`
   } while (panelConfig.value.widgets[widgetId])
 
-  panelConfig.value.widgets[widgetId] = {
+  const widgetData = {
     type: t,
     position: { x: 0, y: 0, w: 1, h: 1 },
     props: extractSchemaDefaults(widget?.propsSchema),
     class: widget?.defaultClass ?? '',
-    style: widget?.defaultStyle ?? {},
+    style: { ...defaultStyle, ...widget?.defaultStyle },
   }
+
+  panelConfig.value.widgets[widgetId] = JSON.parse(JSON.stringify(widgetData))
   saveLocalSchema()
 }
 

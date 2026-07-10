@@ -1,5 +1,5 @@
 import { l10n } from '@/localization'
-import type { PropSchema } from '@/schema/widget'
+import type { DataSource, PropSchema, WidgetSource } from '@/schema/widget'
 
 export function getVal(obj: Record<string, any>, path: string | undefined, defaultValue: any) {
   if (!path) return defaultValue
@@ -17,8 +17,13 @@ export function getVal(obj: Record<string, any>, path: string | undefined, defau
 }
 
 export function extractSchemaDefaults(schemas: PropSchema[] | undefined) {
-  if (schemas === undefined) return {}
-  const result: Record<string, any> = {}
+  const result: Record<string, any> & DataSource & WidgetSource = {
+    widgetSource: null,
+    dataSource: null,
+  }
+
+  if (schemas === undefined) return result
+
   for (const schema of schemas) {
     if ('default' in schema) {
       if (typeof schema.default === 'string') {

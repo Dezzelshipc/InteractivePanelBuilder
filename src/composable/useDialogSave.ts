@@ -12,7 +12,8 @@ export function useDialogSave(options: {
   const isApply = ref(false)
 
   function onShowDialog() {
-    for (const [i, model] of options.modelProps.entries()) savedStates[i] = { ...model.value }
+    for (const [i, model] of options.modelProps.entries())
+      savedStates[i] = JSON.parse(JSON.stringify(model.value))
     options.onShow?.()
   }
 

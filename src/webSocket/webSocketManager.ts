@@ -1,3 +1,4 @@
+import { isEditorMode } from '@/components/editor/editorController'
 import { ref } from 'vue'
 
 export type MessageHandler = (payload: any) => void
@@ -40,7 +41,7 @@ export class WebSocketManager {
 
       const topic = data.topic || '__global__'
       const handlers = this.handlers.get(topic)
-      if (handlers) {
+      if (handlers && !isEditorMode.value) {
         handlers.forEach((fn) => fn(data.payload))
       }
     }
@@ -119,21 +120,13 @@ export class WebSocketManager {
   }
 }
 
-let wsManager: WebSocketManager | null = null
+let wsManagers: Map<string, WebSocketManager> = new Map()
 
 export function getWebSocketManager(url: string) {
-  if (!wsManager) {
-    wsManager = new WebSocketManager(url)
-  } else if (url && wsManager.getUrl() !== url) {
-    wsManager.destroy()
-    wsManager = new WebSocketManager(url)
-  }
-  return wsManager
+  if (!wsManagers.has(url)) wsManagers.set(url, new WebSocketManager(url))
+  return wsManagers.get(url)!
 }
 
-export function deleteWebSocketManager() {
-  if (wsManager) {
-    wsManager.destroy()
-    wsManager = null
-  }
+export function deleteWebSocketManager(url: string) {
+  if (wsManagers.has(url)) wsManagers.delete(url)
 }

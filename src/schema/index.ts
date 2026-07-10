@@ -1,27 +1,21 @@
-import { ref, toValue, unref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { get_default_panel_config, type PanelConfig } from './config'
-import { SubscriptionManager, subscriptionManager } from '@/webSocket/subscriptionManager'
-import { deleteWebSocketManager, getWebSocketManager } from '@/webSocket/webSocketManager'
+import {
+  startSubscriptionManagers,
+  stopSubscriptionManagers,
+} from '@/webSocket/subscriptionManager'
 import { isEditorMode } from '@/components/editor/editorController'
 
 export const panelConfig = ref(get_default_panel_config())
 
 watch(isEditorMode, (is_editor) => {
-  const server = panelConfig.value.webSocketServer
-
   if (is_editor) {
-    subscriptionManager.removeManager()
-    deleteWebSocketManager()
+    stopSubscriptionManagers()
 
     loadLocalSchema()
     console.log('Loaded saved panel state')
-
-    console.log('Disconnected from web socket server')
-  } else if (server) {
-    subscriptionManager.setManager(getWebSocketManager(server))
-    console.log('Connected to web socket server')
   } else {
-    console.log('Not connected to any web socket server')
+    startSubscriptionManagers()
   }
 })
 
@@ -53,6 +47,7 @@ declare global {
     saveLocalSchema: typeof saveLocalSchema
     loadLocalSchema: typeof loadLocalSchema
     getLocalSchema: () => string
+    getLocalSchemaJSON: () => Record<string, any>
     removeLocalSchema: () => void
   }
 }
@@ -61,4 +56,5 @@ window.panelConfig = () => panelConfig.value
 window.saveLocalSchema = saveLocalSchema
 window.loadLocalSchema = loadLocalSchema
 window.getLocalSchema = () => localStorage.getItem(localSchemaKey) as string
+window.getLocalSchemaJSON = () => JSON.parse(window.getLocalSchema())
 window.removeLocalSchema = () => localStorage.removeItem(localSchemaKey)

@@ -53,6 +53,7 @@ const removeConfirm = () => {
     accept: () => {
       visible.value = false
       delete panelConfig.value.widgets[props.widgetId]
+      saveLocalSchema()
     },
   })
 }

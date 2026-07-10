@@ -4,6 +4,7 @@ import FieldBoolean from './FieldBoolean.vue'
 import FieldSelect from './FieldSelect.vue'
 import FieldNumber from './FieldNumber.vue'
 import FieldString from './FieldString.vue'
+import FieldDataSource from './FieldDataSource.vue'
 
 class FieldsRegistry {
   private registry = new Map<string, Component>()
@@ -32,7 +33,7 @@ export const fieldsRegistry = new FieldsRegistry()
 
 fieldsRegistry.register('text', FieldText)
 fieldsRegistry.register('string', FieldString)
-fieldsRegistry.register('dataSource', FieldString)
+fieldsRegistry.register('dataSource', FieldDataSource)
 fieldsRegistry.register('number', FieldNumber)
 fieldsRegistry.register('boolean', FieldBoolean)
 fieldsRegistry.register('select', FieldSelect)

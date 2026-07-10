@@ -18,7 +18,19 @@ const visible = ref(false)
 const { arrayRefs, isAll: isSavable } = checkRequiredTemplate('arrayRefs')
 
 const localProps = defineModel<Record<string, any>>('widgetProps', { required: true })
+
+function cleanDataSource() {
+  for (const v of props.propSchemas) {
+    const k = v.name
+    const ds = localProps.value[k]
+    if (v.type === 'dataSource' && ds && (!ds['url'] || !ds['topic'])) {
+      localProps.value[k] = null
+    }
+  }
+}
+
 function onSave() {
+  cleanDataSource()
   if (panelConfig.value.widgets[props.widgetId] && isSavable.value) saveLocalSchema()
 }
 
