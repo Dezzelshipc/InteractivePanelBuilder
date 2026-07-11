@@ -12,6 +12,8 @@ import { propWidgetSource, type WidgetSource } from '@/schema/widget'
 
 export type TextWidgetProps = {
   text: string
+  prefix?: string
+  postfix?: string
   x_align: 0 | 1 | 2
   y_align: 0 | 1 | 2
 } & DataSource &
@@ -28,6 +30,20 @@ export const textWidget: WidgetDefinition = {
       label: 'widgets.text.text',
       type: 'text',
       default: 'widgets.text.text',
+    },
+    {
+      name: 'prefix',
+      label: 'widgets.text.prefix',
+      type: 'text',
+      default: '',
+      required: false,
+    },
+    {
+      name: 'postfix',
+      label: 'widgets.text.postfix',
+      type: 'text',
+      default: '',
+      required: false,
     },
     {
       name: 'x_align',
