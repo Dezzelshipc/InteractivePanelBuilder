@@ -128,5 +128,8 @@ export function getWebSocketManager(url: string) {
 }
 
 export function deleteWebSocketManager(url: string) {
-  if (wsManagers.has(url)) wsManagers.delete(url)
+  if (wsManagers.has(url)) {
+    wsManagers.get(url)?.destroy()
+    wsManagers.delete(url)
+  }
 }

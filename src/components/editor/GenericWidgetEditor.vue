@@ -54,6 +54,7 @@ const { onHideDialog, onShowDialog, onSaveButton } = useDialogSave({
     v-model:visible="visible"
     modal
     draggable
+    maximizable
     :header="l10n.editor.edit"
     :style="{ minWidth: '50rem' }"
     :pt="{
@@ -69,7 +70,7 @@ const { onHideDialog, onShowDialog, onSaveButton } = useDialogSave({
       v-for="propSchema of propSchemas"
       ref="arrayRefs"
       :key="propSchema.name"
-      :is="fieldsRegistry.get(propSchema.type)"
+      :is="fieldsRegistry.get(propSchema.type, propSchema.name)"
       :prop-schema="propSchema"
       v-model="localProps[propSchema.name]"
     />

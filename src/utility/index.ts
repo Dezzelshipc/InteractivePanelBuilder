@@ -2,7 +2,7 @@ import { l10n } from '@/localization'
 import type { DataSource, PropSchema, WidgetSource } from '@/schema/widget'
 
 export function getVal(obj: Record<string, any>, path: string | undefined, defaultValue: any) {
-  if (!path) return defaultValue
+  if (!path || typeof path !== 'string') return defaultValue
   const keys = path.split('.')
   let current = obj
 

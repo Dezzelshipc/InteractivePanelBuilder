@@ -54,9 +54,7 @@ export function useWebSocket(getDataSource: () => WebSocketConfig | null, deboun
   watch(
     getDataSource,
     (newDataSource) => {
-      console.log(newDataSource?.topic, dataSource?.topic)
       if (newDataSource?.url !== dataSource?.url || newDataSource?.topic !== dataSource?.topic) {
-        console.log('A')
         unsubscribe()
         updateData(newDataSource)
         subscribe()

@@ -72,6 +72,7 @@ const removeConfirm = () => {
     v-model:visible="visible"
     modal
     draggable
+    maximizable
     :header="l10n.editor.edit"
     :style="{ minWidth: '50rem' }"
     :pt="{

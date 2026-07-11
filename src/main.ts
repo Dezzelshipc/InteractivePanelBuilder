@@ -12,6 +12,8 @@ import Tooltip from 'primevue/tooltip'
 
 import ConfirmationService from 'primevue/confirmationservice'
 
+import 'vue-color/style.css'
+
 import '@/utility/bandaid.js'
 
 const app = createApp(App)

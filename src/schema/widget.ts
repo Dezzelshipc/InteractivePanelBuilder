@@ -14,11 +14,24 @@ export interface DataSource {
   dataSource: WebSocketConfig | null
 }
 
+export type PropType =
+  | 'string'
+  | 'text'
+  | 'number'
+  | 'boolean'
+  | 'select'
+  | 'dataSource'
+  | 'object'
+  | 'array'
+  | 'objectText'
+  | 'color'
+  | 'special'
+
 export interface PropSchema {
   name: string
   label: string
   info?: string
-  type: 'string' | 'text' | 'number' | 'boolean' | 'select' | 'dataSource' | 'object'
+  type: PropType
   options?: { value: any; label: string; icon?: string }[]
   default?: any
   required?: boolean

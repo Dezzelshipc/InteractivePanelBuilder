@@ -28,7 +28,6 @@ const showText = computed(() => {
   <div :class="[alignY(widgetProps.y_align), 'wh flex flex-col']">
     <p v-if="props.widgetProps.text" :class="[alignX(widgetProps.x_align), 'whitespace-pre-line']">
       {{ showText }}
-      {{ props.widgetProps.dataSource }}
     </p>
   </div>
 </template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { loadWidget } from '@/registry/loadWidget'
-import { widgetRegistry } from '@/registry/widgetRegistry'
+import { loadWidget } from '@/components/widgets/loadWidget.ts'
+import { widgetRegistry } from '@/components/widgets/widgetRegistry.ts'
 import type { WidgetConfig, WidgetPosition } from '@/schema/config'
 import { computed, onMounted, shallowRef, watch } from 'vue'
 

@@ -34,7 +34,7 @@ export function checkRequiredTemplate(name: string) {
 }
 
 interface CheckField {
-  model: ModelRef<any>
+  model: ModelRef<any> | Ref<any>
   required: boolean | undefined
   validator?: (value: any) => boolean
 }

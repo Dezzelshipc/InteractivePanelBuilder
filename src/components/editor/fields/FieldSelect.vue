@@ -4,6 +4,7 @@ import { l10n } from '@/localization'
 import type { PropSchema } from '@/schema/widget'
 import { getVal } from '@/utility'
 import { Select } from 'primevue'
+import PartLabel from './parts/PartLabel.vue'
 
 const props = defineProps<{
   propSchema: PropSchema
@@ -19,14 +20,15 @@ const { isValid } = checkValid([
 ])
 
 defineExpose({ isValid })
+
+function getOptionByValue(value: any) {
+  return props.propSchema.options?.filter((x) => x.value == value)[0]
+}
 </script>
 
 <template>
   <div class="flex items-center gap-4 mb-4">
-    <label :for="propSchema.name" class="font-semibold w-24 text-sm">
-      {{ getVal(l10n, propSchema.label, propSchema.name) }}
-      <span v-if="propSchema.required" style="color: red" v-tooltip="l10n.editor.required">*</span>
-    </label>
+    <PartLabel :prop-schema="propSchema" />
     <Select
       v-model="propModel"
       :options="props.propSchema.options"
@@ -40,7 +42,13 @@ defineExpose({ isValid })
         <div class="flex items-center gap-2">
           <i :class="propSchema.options?.[slotProps.value]?.icon" />
           <span>
-            {{ getVal(l10n, propSchema.options?.[slotProps.value]?.label, slotProps.value) }}
+            {{
+              getVal(
+                l10n,
+                getOptionByValue(slotProps.value)?.label,
+                getOptionByValue(slotProps.value)?.label,
+              )
+            }}
           </span>
         </div>
       </template>
@@ -49,7 +57,7 @@ defineExpose({ isValid })
           <i :class="[slotProps.option.icon]" />
           <div class="flex flex-col">
             <span class="font-medium">
-              {{ getVal(l10n, slotProps.option.label, slotProps.option.value) }}
+              {{ getVal(l10n, slotProps.option.label, slotProps.option.label) }}
             </span>
             <span class="text-xs text-surface-500">{{ slotProps.option.description }}</span>
           </div>

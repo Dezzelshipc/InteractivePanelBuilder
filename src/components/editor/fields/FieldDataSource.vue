@@ -7,6 +7,7 @@ import { InputText } from 'primevue'
 import PartRequired from './parts/PartRequired.vue'
 import PartInfo from './parts/PartInfo.vue'
 import { ref, watch } from 'vue'
+import PartLabel from './parts/PartLabel.vue'
 
 const props = defineProps<{
   propSchema: PropSchema
@@ -52,11 +53,7 @@ defineExpose({ isValid })
 
 <template>
   <div class="flex items-center gap-4 mb-4">
-    <label :for="propSchema.name" class="font-semibold w-24 text-sm">
-      {{ getVal(l10n, propSchema.label, propSchema.name) }}
-      <PartRequired v-if="propSchema.required" />
-      <PartInfo v-if="propSchema.info" :info="propSchema.info" />
-    </label>
+    <PartLabel :prop-schema="propSchema" />
     <InputText
       :id="propSchema.name"
       class="flex-auto"

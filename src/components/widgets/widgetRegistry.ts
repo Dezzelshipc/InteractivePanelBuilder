@@ -1,7 +1,9 @@
 import fullTextWidget from '@/components/widgets/fullText'
+import simpleChartWidget from '@/components/widgets/simpleChart'
 import textWidget from '@/components/widgets/text'
 import videoWidget from '@/components/widgets/video'
 import type { WidgetDefinition, RegisteredWidget } from '@/schema/widget'
+import jsonChartWidget from './jsonChart'
 
 class WidgetRegistry {
   private registry = new Map<string, RegisteredWidget>()
@@ -32,3 +34,6 @@ widgetRegistry.register('full_text', fullTextWidget)
 widgetRegistry.register('text', textWidget)
 
 widgetRegistry.register('video', videoWidget)
+
+widgetRegistry.register('simpleChart', simpleChartWidget)
+widgetRegistry.register('jsonChart', jsonChartWidget)

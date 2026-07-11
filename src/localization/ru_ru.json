@@ -117,6 +117,29 @@
       "label": "Видео",
 
       "url_info": "MP4, WebM, HLS"
+    },
+    "simple_chart": {
+      "label": "Простой график",
+      "type": "Тип",
+      "labels": "Названия (labels)",
+      "datasets": "Датасеты",
+      "options": "Настройки",
+      "options_info": "Настройки графика в виде JSON; см. на сайте chartjs.org",
+
+      "dataset": {
+        "label": "Название",
+        "data": "Данные",
+        "background_color": "Цвет фона",
+        "border_color": "Цвет границы/линии"
+      },
+
+      "type_main": "Использовать основной тип",
+      "add_dataset": "Добавить датасет"
+    },
+    "json_chart": {
+      "label": "График JSON",
+      "data": "Данные графика",
+      "data_info": "Принимаются все настройки в виде JSON для класса Chart; см. настройки на chartjs.org"
     }
   }
 }

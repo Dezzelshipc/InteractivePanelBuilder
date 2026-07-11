@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { l10n } from '@/localization'
-import { widgetRegistry } from '@/registry/widgetRegistry'
+import { widgetRegistry } from '@/components/widgets/widgetRegistry'
 import { panelConfig, saveLocalSchema } from '@/schema'
 import { defaultStyle } from '@/schema/config'
 import { extractSchemaDefaults, getRandomInt, getVal } from '@/utility'

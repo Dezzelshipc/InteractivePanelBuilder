@@ -4,6 +4,7 @@ import { l10n } from '@/localization'
 import type { PropSchema } from '@/schema/widget'
 import { getVal } from '@/utility'
 import { InputText } from 'primevue'
+import PartLabel from './parts/PartLabel.vue'
 
 const props = defineProps<{
   propSchema: PropSchema
@@ -25,16 +26,7 @@ defineExpose({ isValid })
 
 <template>
   <div class="flex items-center gap-4 mb-4">
-    <label :for="propSchema.name" class="font-semibold w-24 text-sm">
-      {{ getVal(l10n, propSchema.label, propSchema.name) }}
-      <span v-if="propSchema.required" style="color: red" v-tooltip="l10n.editor.required">*</span>
-      <span
-        v-if="propSchema.info"
-        style="color: green"
-        v-tooltip="getVal(l10n, propSchema.info, `info not defined: ${propSchema.info}`)"
-        >?</span
-      >
-    </label>
+    <PartLabel :prop-schema="propSchema" />
     <InputText
       :id="propSchema.name"
       class="flex-auto"
