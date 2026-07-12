@@ -8,11 +8,8 @@ import FieldsClassStyle from '../fields/FieldsClassStyle.vue'
 import FieldNumber from '../fields/FieldNumber.vue'
 import { checkRequiredArray } from '@/composable/checkRequired.ts'
 import { useDialogSave } from '@/composable/useDialogSave.ts'
-import FieldString from '../fields/FieldString.vue'
 
 const visible = ref(false)
-
-const webSocketServer = ref()
 
 const { arrayRefs, isAll: isSavable } = checkRequiredArray(2)
 
@@ -73,8 +70,19 @@ const { onHideDialog, onShowDialog, onSaveButton } = useDialogSave({
     <Divider />
 
     <FieldsClassStyle
-      v-model:class="panelConfig.layout.class"
-      v-model:style="panelConfig.layout.style"
+      :prop-class="propSchemaLayout.classGrid"
+      :prop-style="propSchemaLayout.styleGrid"
+      v-model:class="panelConfig.layout.classGrid"
+      v-model:style="panelConfig.layout.styleGrid"
+    />
+
+    <Divider />
+
+    <FieldsClassStyle
+      :prop-class="propSchemaLayout.classBackground"
+      :prop-style="propSchemaLayout.styleBackground"
+      v-model:class="panelConfig.layout.classBackground"
+      v-model:style="panelConfig.layout.styleBackground"
     />
     <template #footer>
       <Button severity="secondary" variant="outlined" @click="visible = false">

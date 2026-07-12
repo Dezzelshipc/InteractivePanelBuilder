@@ -40,12 +40,11 @@ function beforeShow() {
     :options="widgets"
     optionLabel="label"
     optionValue="type"
-    :placeholder="l10n.editor.toolbar.add_widget"
     @change="change"
     @before-show="beforeShow"
   >
     <template #value>
-      <i class="pi pi-folder" />
+      <i class="pi pi-plus" />
       {{ l10n.editor.toolbar.add_widget }}
     </template>
 

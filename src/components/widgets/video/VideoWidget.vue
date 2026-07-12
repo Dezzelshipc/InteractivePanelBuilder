@@ -11,19 +11,16 @@ const videoElement = ref<HTMLVideoElement | null>(null)
 const hlsInstance = ref<Hls | null>(null)
 const error = ref(false)
 
-// Проверка, является ли URL HLS-потоком (.m3u8)
 const isHls = computed(
   () => props.widgetProps.url?.endsWith('.m3u8') || props.widgetProps.url?.includes('.m3u8'),
 )
 
-// Стиль для контейнера (object-fit)
 const containerStyle = computed(() => ({
   width: '100%',
   height: '100%',
   'object-fit': props.widgetProps.objectFit || 'cover',
 }))
 
-// Инициализация плеера
 function initPlayer() {
   if (!videoElement.value) return
   if (isHls.value && Hls.isSupported()) {
@@ -93,7 +90,6 @@ onBeforeUnmount(destroyPlayer)
 
 <template>
   <div class="video-widget wh">
-    <!-- HLS / MP4 -->
     <video
       ref="videoElement"
       :autoplay="props.widgetProps.autoplay"
@@ -124,7 +120,6 @@ onBeforeUnmount(destroyPlayer)
 
 .video-error {
   position: absolute;
-  color: #fff;
   pointer-events: none;
 }
 </style>

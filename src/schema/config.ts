@@ -6,16 +6,19 @@ export interface PanelConfig {
   widgets: Record<string, WidgetConfig>
 }
 
-export interface Style {
+export type Style = {
   [index: string]: string | number | boolean
-}
+} & Record<string, any>
 
 export interface LayoutConfig {
   columns: number
   rows: number
   gap?: number
-  class?: string
-  style?: Style
+  classGrid?: string
+  styleGrid?: Style
+
+  classBackground?: string
+  styleBackground?: Style
 }
 
 export interface WidgetPosition {
@@ -39,7 +42,7 @@ export function get_default_panel_config(): PanelConfig {
     layout: {
       columns: 4,
       rows: 4,
-      style: {
+      styleGrid: {
         padding: '1em',
       },
     },
@@ -69,15 +72,27 @@ export const propSchemaLayout: { [k in keyof Required<LayoutConfig>]: PropSchema
     default: 0,
     required: false,
   },
-  class: {
-    name: 'class',
-    label: 'editor.styles.class',
+  classGrid: {
+    name: 'classGrid',
+    label: 'editor.styles.class_grid',
     type: 'string',
     default: '',
   },
-  style: {
-    name: 'style',
-    label: 'editor.styles.style',
+  styleGrid: {
+    name: 'styleGrid',
+    label: 'editor.styles.style_grid',
+    type: 'object',
+    default: '',
+  },
+  classBackground: {
+    name: 'classBackground',
+    label: 'editor.styles.class_background',
+    type: 'string',
+    default: '',
+  },
+  styleBackground: {
+    name: 'styleBackground',
+    label: 'editor.styles.style_background',
     type: 'object',
     default: '',
   },

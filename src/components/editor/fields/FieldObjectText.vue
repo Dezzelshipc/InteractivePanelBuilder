@@ -64,6 +64,7 @@ defineExpose({ isValid })
   padding: 4px;
   border-radius: 10px;
 
+  max-width: 30vw;
   max-height: 50vh;
   overflow: auto;
 }

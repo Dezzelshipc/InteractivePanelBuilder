@@ -5,7 +5,10 @@
     "LayoutConfig": {
       "additionalProperties": false,
       "properties": {
-        "class": {
+        "classBackground": {
+          "type": "string"
+        },
+        "classGrid": {
           "type": "string"
         },
         "columns": {
@@ -17,7 +20,10 @@
         "rows": {
           "type": "number"
         },
-        "style": {
+        "styleBackground": {
+          "$ref": "#/definitions/Style"
+        },
+        "styleGrid": {
           "$ref": "#/definitions/Style"
         }
       },
@@ -34,9 +40,6 @@
           "$ref": "#/definitions/LayoutConfig"
         },
         "version": {
-          "type": "string"
-        },
-        "webSocketServer": {
           "type": "string"
         },
         "widgets": {
@@ -61,6 +64,23 @@
           "boolean"
         ]
       },
+      "properties": {},
+      "type": "object"
+    },
+    "WebSocketConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "topic": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "url",
+        "topic"
+      ],
       "type": "object"
     },
     "WidgetConfig": {
@@ -73,6 +93,32 @@
           "$ref": "#/definitions/WidgetPosition"
         },
         "props": {
+          "properties": {
+            "dataSource": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/WebSocketConfig"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "widgetSource": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/WebSocketConfig"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "dataSource",
+            "widgetSource"
+          ],
           "type": "object"
         },
         "style": {
@@ -84,7 +130,8 @@
       },
       "required": [
         "type",
-        "position"
+        "position",
+        "props"
       ],
       "type": "object"
     },

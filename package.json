@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "devh": "vite --host",
-    "config-schema": "ts-json-schema-generator --path src/schema/config.ts --type PanelConfig > src/schema/panel_config.json",
+    "config": "ts-json-schema-generator --path src/schema/config.ts --type PanelConfig > src/schema/panel_config.json",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",

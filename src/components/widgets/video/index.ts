@@ -70,10 +70,6 @@ export const videoWidget: WidgetDefinition = {
     },
     propWidgetSource,
   ],
-  defaultStyle: {
-    background: '#000000',
-    borderRadius: '4px',
-  },
 }
 
 export default videoWidget

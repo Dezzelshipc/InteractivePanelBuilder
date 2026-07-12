@@ -1,0 +1,72 @@
+{
+  "version": "1.0",
+  "layout": {
+    "columns": 4,
+    "rows": 4,
+    "styleGrid": {
+      "padding": "1em"
+    },
+    "styleBackground": {
+      "background": "#0066B3"
+    }
+  },
+  "widgets": {
+    "full_text-686395447": {
+      "type": "full_text",
+      "position": {
+        "x": 1,
+        "y": 1,
+        "w": 2,
+        "h": 1
+      },
+      "props": {
+        "widgetSource": null,
+        "dataSource": null,
+        "title": "Я не",
+        "title_align": 1,
+        "text": "дизайнер ;-P",
+        "text_align": 1,
+        "self_align": 1
+      },
+      "class": "",
+      "style": {
+        "z-index": 100,
+        "border": "2px solid white",
+        "borderRadius": "10em",
+        "padding": "10px",
+        "background": "linear-gradient(0deg,rgba(50, 102, 179, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%)",
+        "color": "white"
+      }
+    },
+    "full_text-3886417409": {
+      "type": "full_text",
+      "position": {
+        "x": 1,
+        "y": 2,
+        "w": 2,
+        "h": 1
+      },
+      "props": {
+        "widgetSource": null,
+        "dataSource": null,
+        "title": "",
+        "title_align": 1,
+        "text": "Лучше не делать градиенты большими, иначе рендер панели сильно замедлится!",
+        "text_align": 1,
+        "self_align": 1
+      },
+      "class": "",
+      "style": {
+        "z-index": 100,
+        "border": "12px solid red",
+        "borderRadius": "8px",
+        "padding": "10px",
+        "background": "rgba(237, 221, 83, 1)",
+        "text-decoration": "underline",
+        "font-weight": 800,
+        "font-size": "1.5em",
+        "font-family": "sans-serif"
+      }
+    }
+  }
+}

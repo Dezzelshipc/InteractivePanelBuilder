@@ -11,8 +11,16 @@ onMounted(loadLocalSchema)
 </script>
 
 <template>
-  <ConfirmDialog />
-  <Toast />
+  <ConfirmDialog
+    :pt="{
+      message: { class: 'whitespace-pre-line' },
+    }"
+  />
+  <Toast
+    :pt="{
+      message: { class: 'whitespace-pre-line' },
+    }"
+  />
   <EditorToolbox />
   <PanelRenderer />
 </template>

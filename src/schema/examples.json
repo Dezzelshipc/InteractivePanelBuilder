@@ -1,0 +1,22 @@
+[
+  {
+    "label": "editor.toolbar.examples.clean",
+    "path": "examples/clean.json"
+  },
+  {
+    "label": "editor.toolbar.examples.example_widgets",
+    "path": "examples/example_widgets.json"
+  },
+  {
+    "label": "editor.toolbar.examples.example_style",
+    "path": "examples/example_style.json"
+  },
+  {
+    "label": "editor.toolbar.examples.websocket",
+    "path": "examples/websocket.json"
+  },
+  {
+    "label": "editor.toolbar.examples.example_stress",
+    "path": "examples/example_stress.json"
+  }
+]

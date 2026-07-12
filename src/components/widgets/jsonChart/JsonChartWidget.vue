@@ -67,10 +67,7 @@ onUnmounted(destroyChart)
 
 watch(
   () => props.data,
-  () => {
-    console.log('F', error.value)
-    initChart()
-  },
+  () => initChart(),
   { deep: true },
 )
 

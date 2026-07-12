@@ -1,0 +1,661 @@
+{
+  "version": "1.0",
+  "layout": {
+    "columns": 10,
+    "rows": 8,
+    "styleGrid": {
+      "padding": "1em"
+    },
+    "gap": 4
+  },
+  "widgets": {
+    "full_text-6440816748": {
+      "type": "full_text",
+      "position": {
+        "x": 2,
+        "y": 0,
+        "w": 4,
+        "h": 1
+      },
+      "props": {
+        "widgetSource": null,
+        "dataSource": null,
+        "title": "Разные виджеты и их возможности",
+        "title_align": 1,
+        "text": "",
+        "text_align": 1,
+        "self_align": 1
+      },
+      "class": "",
+      "style": {
+        "z-index": 100,
+        "padding": "10px"
+      }
+    },
+    "text-2548871989": {
+      "type": "text",
+      "position": {
+        "x": 0,
+        "y": 1,
+        "w": 2,
+        "h": 1
+      },
+      "props": {
+        "widgetSource": null,
+        "dataSource": {
+          "url": "ws://localhost:8765",
+          "topic": "random2"
+        },
+        "text": "12.3",
+        "prefix": "🌡️Температура: ",
+        "postfix": " °C",
+        "x_align": 1,
+        "y_align": 1
+      },
+      "class": "",
+      "style": {
+        "z-index": 100,
+        "border": "2px solid black",
+        "borderRadius": "8px",
+        "padding": "10px"
+      }
+    },
+    "full_text-964385020": {
+      "type": "full_text",
+      "position": {
+        "x": 0,
+        "y": 2,
+        "w": 2,
+        "h": 2
+      },
+      "props": {
+        "widgetSource": null,
+        "dataSource": null,
+        "title": "Заголовок",
+        "title_align": 0,
+        "text": "И текст\nтут всё понятно\n\nТакже можно оставлять одно из полей пустым, тогда оно не появится",
+        "text_align": 2,
+        "self_align": 1
+      },
+      "class": "",
+      "style": {
+        "z-index": 100,
+        "border": "2px solid black",
+        "borderRadius": "8px",
+        "padding": "10px"
+      }
+    },
+    "video-7656587879": {
+      "type": "video",
+      "position": {
+        "x": 2,
+        "y": 2,
+        "w": 2,
+        "h": 2
+      },
+      "props": {
+        "widgetSource": {
+          "url": "",
+          "topic": ""
+        },
+        "dataSource": null,
+        "url": "https://vampire.survivors.wiki/images/Splash-Ode_to_Castlevania.mp4",
+        "autoplay": true,
+        "loop": true,
+        "muted": true,
+        "controls": false,
+        "objectFit": "cover"
+      },
+      "class": "",
+      "style": {
+        "z-index": 100,
+        "background": "#000000",
+        "borderRadius": "4px"
+      }
+    },
+    "full_text-4480929813": {
+      "type": "full_text",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "w": 2,
+        "h": 1
+      },
+      "props": {
+        "widgetSource": null,
+        "dataSource": null,
+        "title": "",
+        "title_align": 1,
+        "text": "\"Текст\" в основном для передачи простых данных через WebSocket",
+        "text_align": 1,
+        "self_align": 1
+      },
+      "class": "",
+      "style": {
+        "z-index": 100,
+        "border": "2px solid black",
+        "borderRadius": "8px",
+        "padding": "10px"
+      }
+    },
+    "video-5796813634": {
+      "type": "video",
+      "position": {
+        "x": 2,
+        "y": 4,
+        "w": 2,
+        "h": 2
+      },
+      "props": {
+        "widgetSource": null,
+        "dataSource": null,
+        "url": "https://cdn.jwplayer.com/manifests/pZxWPRg4.m3u8",
+        "autoplay": true,
+        "loop": true,
+        "muted": true,
+        "controls": false,
+        "objectFit": "contain"
+      },
+      "class": "",
+      "style": {
+        "z-index": 100
+      }
+    },
+    "full_text-845235882": {
+      "type": "full_text",
+      "position": {
+        "x": 2,
+        "y": 1,
+        "w": 2,
+        "h": 1
+      },
+      "props": {
+        "widgetSource": null,
+        "dataSource": null,
+        "title": "",
+        "title_align": 1,
+        "text": "\"Видео\" - URL видео: MP4, WebM, HLS (.m3u8)\nСтатическое видео или потоковое видео",
+        "text_align": 1,
+        "self_align": 1
+      },
+      "class": "",
+      "style": {
+        "z-index": 100,
+        "border": "2px solid black",
+        "borderRadius": "8px",
+        "padding": "10px"
+      }
+    },
+    "simpleChart-1401408726": {
+      "type": "simpleChart",
+      "position": {
+        "x": 4,
+        "y": 3,
+        "w": 2,
+        "h": 2
+      },
+      "props": {
+        "widgetSource": null,
+        "dataSource": null,
+        "type": "line",
+        "labels": [
+          "Январь",
+          "Февраль",
+          "Март"
+        ],
+        "datasets": [
+          {
+            "label": "Что-то повышается",
+            "data": [
+              10,
+              20,
+              40
+            ],
+            "backgroundColor": "#7ed32133",
+            "borderColor": "#7ed321"
+          },
+          {
+            "label": "Что-то понижается",
+            "data": [
+              50,
+              25,
+              5
+            ],
+            "backgroundColor": "#d0021b33",
+            "borderColor": "#d0021b"
+          }
+        ],
+        "options": {}
+      },
+      "class": "",
+      "style": {
+        "z-index": 100,
+        "border": "2px solid black",
+        "borderRadius": "8px",
+        "padding": "10px"
+      }
+    },
+    "simpleChart-9691118622": {
+      "type": "simpleChart",
+      "position": {
+        "x": 4,
+        "y": 5,
+        "w": 2,
+        "h": 3
+      },
+      "props": {
+        "widgetSource": null,
+        "dataSource": null,
+        "type": "radar",
+        "labels": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "datasets": [
+          {
+            "label": "Красная",
+            "data": [
+              70,
+              60,
+              30,
+              40
+            ],
+            "backgroundColor": "#FF638433",
+            "borderColor": "#FF6384"
+          },
+          {
+            "label": "Синяя",
+            "data": [
+              100,
+              30,
+              50,
+              20
+            ],
+            "backgroundColor": "#4a90e233",
+            "borderColor": "#4a90e2"
+          }
+        ],
+        "options": {}
+      },
+      "class": "",
+      "style": {
+        "z-index": 100,
+        "border": "2px solid black",
+        "borderRadius": "8px",
+        "padding": "10px"
+      }
+    },
+    "full_text-8001735932": {
+      "type": "full_text",
+      "position": {
+        "x": 4,
+        "y": 1,
+        "w": 2,
+        "h": 2
+      },
+      "props": {
+        "widgetSource": null,
+        "dataSource": null,
+        "title": "",
+        "title_align": 1,
+        "text": "\"Простой График\" использует библиотеку 'chart.js'.\nВизуальный редактор, но уменьшенный функционал",
+        "text_align": 1,
+        "self_align": 1
+      },
+      "class": "",
+      "style": {
+        "z-index": 100,
+        "border": "2px solid black",
+        "borderRadius": "8px",
+        "padding": "10px"
+      }
+    },
+    "full_text-6003336863": {
+      "type": "full_text",
+      "position": {
+        "x": 6,
+        "y": 0,
+        "w": 2,
+        "h": 2
+      },
+      "props": {
+        "widgetSource": null,
+        "dataSource": null,
+        "title": "",
+        "title_align": 1,
+        "text": "\"График JSON\" также использует библиотеку 'chart.js'.\nРедактор только JSON схемы, но имеет весь функционал и прямое подключение схемы к WebSockets",
+        "text_align": 1,
+        "self_align": 1
+      },
+      "class": "",
+      "style": {
+        "z-index": 100,
+        "border": "2px solid black",
+        "borderRadius": "8px",
+        "padding": "10px"
+      }
+    },
+    "jsonChart-9291452690": {
+      "type": "jsonChart",
+      "position": {
+        "x": 6,
+        "y": 2,
+        "w": 2,
+        "h": 2
+      },
+      "props": {
+        "widgetSource": null,
+        "dataSource": null,
+        "data": {
+          "type": "doughnut",
+          "data": {
+            "labels": [
+              "Red",
+              "Blue",
+              "Yellow"
+            ],
+            "datasets": [
+              {
+                "label": "My First Dataset",
+                "data": [
+                  300,
+                  50,
+                  100
+                ],
+                "backgroundColor": [
+                  "rgb(255, 99, 132)",
+                  "rgb(54, 162, 235)",
+                  "rgb(255, 205, 86)"
+                ],
+                "hoverOffset": 4
+              }
+            ]
+          }
+        }
+      },
+      "class": "",
+      "style": {
+        "z-index": 100,
+        "border": "2px solid black",
+        "borderRadius": "8px",
+        "padding": "10px"
+      }
+    },
+    "jsonChart-8965962393": {
+      "type": "jsonChart",
+      "position": {
+        "x": 6,
+        "y": 4,
+        "w": 2,
+        "h": 2
+      },
+      "props": {
+        "widgetSource": {
+          "url": "",
+          "topic": ""
+        },
+        "dataSource": {
+          "url": "",
+          "topic": ""
+        },
+        "data": {
+          "type": "bar",
+          "data": {
+            "labels": [
+              "Январь",
+              "Февраль",
+              "Март"
+            ],
+            "datasets": [
+              {
+                "label": "D1",
+                "data": [
+                  20,
+                  20,
+                  40
+                ],
+                "backgroundColor": "#70ff6333",
+                "borderColor": "#70ff63",
+                "borderWidth": 2
+              },
+              {
+                "label": "D2",
+                "data": [
+                  40,
+                  50,
+                  10
+                ],
+                "backgroundColor": "#FF638433",
+                "borderColor": "#FF6384",
+                "borderWidth": 2
+              }
+            ]
+          }
+        }
+      },
+      "class": "",
+      "style": {
+        "z-index": 100,
+        "border": "2px solid black",
+        "borderRadius": "8px",
+        "padding": "10px"
+      }
+    },
+    "jsonChart-135146263": {
+      "type": "jsonChart",
+      "position": {
+        "x": 6,
+        "y": 6,
+        "w": 2,
+        "h": 2
+      },
+      "props": {
+        "widgetSource": {
+          "url": "",
+          "topic": ""
+        },
+        "dataSource": {
+          "url": "ws://localhost:8765",
+          "topic": "chart1"
+        },
+        "data": {}
+      },
+      "class": "",
+      "style": {
+        "z-index": 100,
+        "border": "2px solid black",
+        "borderRadius": "8px",
+        "padding": "10px"
+      }
+    },
+    "text-6736037884": {
+      "type": "text",
+      "position": {
+        "x": 8,
+        "y": 1,
+        "w": 1,
+        "h": 1
+      },
+      "props": {
+        "widgetSource": null,
+        "dataSource": {
+          "url": "ws://localhost:8765",
+          "topic": "count"
+        },
+        "text": "X",
+        "prefix": "Счёт = ",
+        "postfix": "",
+        "x_align": 1,
+        "y_align": 1
+      },
+      "class": "",
+      "style": {
+        "z-index": 100,
+        "border": "2px solid black",
+        "borderRadius": "8px",
+        "padding": "10px"
+      }
+    },
+    "text-6932728478": {
+      "type": "text",
+      "position": {
+        "x": 8,
+        "y": 0,
+        "w": 2,
+        "h": 1
+      },
+      "props": {
+        "widgetSource": null,
+        "dataSource": {
+          "url": "ws://localhost:8765",
+          "topic": "random"
+        },
+        "text": "A.BBB",
+        "prefix": "Random = \n",
+        "postfix": "",
+        "x_align": 1,
+        "y_align": 1
+      },
+      "class": "",
+      "style": {
+        "z-index": 100,
+        "border": "2px solid black",
+        "borderRadius": "8px",
+        "padding": "10px"
+      }
+    },
+    "text-1438885207": {
+      "type": "text",
+      "position": {
+        "x": 8,
+        "y": 2,
+        "w": 2,
+        "h": 1
+      },
+      "props": {
+        "widgetSource": null,
+        "dataSource": {
+          "url": "ws://localhost:8765",
+          "topic": "sin"
+        },
+        "text": "A.BBB",
+        "prefix": "sin(count * 0.01) = \n",
+        "postfix": "",
+        "x_align": 1,
+        "y_align": 1
+      },
+      "class": "",
+      "style": {
+        "z-index": 100,
+        "border": "2px solid black",
+        "borderRadius": "8px",
+        "padding": "10px"
+      }
+    },
+    "jsonChart-6080179682": {
+      "type": "jsonChart",
+      "position": {
+        "x": 8,
+        "y": 4,
+        "w": 2,
+        "h": 2
+      },
+      "props": {
+        "widgetSource": null,
+        "dataSource": null,
+        "data": {
+          "type": "bubble",
+          "data": {
+            "labels": [
+              "Январь",
+              "Февраль",
+              "Март"
+            ],
+            "datasets": [
+              {
+                "label": "Dataset",
+                "data": [
+                  {
+                    "x": 20,
+                    "y": 30,
+                    "r": 15
+                  },
+                  {
+                    "x": 40,
+                    "y": 10,
+                    "r": 10
+                  },
+                  {
+                    "x": 30,
+                    "y": 25,
+                    "r": 5
+                  }
+                ],
+                "backgroundColor": "rgb(255, 99, 132)"
+              }
+            ]
+          }
+        }
+      },
+      "class": "",
+      "style": {
+        "z-index": 100,
+        "border": "2px solid black",
+        "borderRadius": "8px",
+        "padding": "10px"
+      }
+    },
+    "video-2879153452": {
+      "type": "video",
+      "position": {
+        "x": 2,
+        "y": 6,
+        "w": 2,
+        "h": 2
+      },
+      "props": {
+        "widgetSource": null,
+        "dataSource": null,
+        "url": "https://webm.html5.org/test.webm",
+        "autoplay": true,
+        "loop": true,
+        "muted": true,
+        "controls": false,
+        "objectFit": "contain"
+      },
+      "class": "",
+      "style": {
+        "z-index": 100,
+        "border": "2px solid lightgreen",
+        "border-radius": "20px"
+      }
+    },
+    "full_text-3151936928": {
+      "type": "full_text",
+      "position": {
+        "x": 0,
+        "y": 4,
+        "w": 2,
+        "h": 4
+      },
+      "props": {
+        "widgetSource": null,
+        "dataSource": null,
+        "title": "Заголовок\nЗаголовок",
+        "title_align": 1,
+        "text": "Текст\nТекст\nТекст\nТекст\nТекст\nТекст\nТекст\nТекст\nТекст\n???\nProfit!",
+        "text_align": 1,
+        "self_align": 1
+      },
+      "class": "",
+      "style": {
+        "z-index": 100,
+        "border": "2px solid black",
+        "borderRadius": "8px",
+        "padding": "10px"
+      }
+    }
+  }
+}
