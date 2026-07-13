@@ -141,7 +141,18 @@
     "video": {
       "label": "Видео",
 
-      "url_info": "MP4, WebM, HLS"
+      "url": "URL видео",
+      "url_info": "MP4, WebM, HLS",
+
+      "autoplay": "Автозапуск",
+      "loop": "Зациклить",
+      "muted": "Заглушить",
+      "controls": "Элементы управления",
+      "object_fit": "Расположение видео",
+      "object_fit_info": "Как видео будет расположено внутри этого виджета",
+      "fit_cover": "Покрыть",
+      "fit_contain": "Вписать",
+      "fit_fill": "Растянуть"
     },
     "simple_chart": {
       "label": "Простой график",

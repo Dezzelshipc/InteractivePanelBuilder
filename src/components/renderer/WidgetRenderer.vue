@@ -147,7 +147,7 @@ const { isResizing, handleMouseDown } = useResize({
   },
 })
 
-const { data: wsWidgetProps } = useWebSocket(() => widgetConfig.value.props.widgetSource, 200)
+const { data: wsWidgetProps } = useWebSocket(() => widgetConfig.value.props.widgetSource, 1000)
 
 watch(
   wsWidgetProps,

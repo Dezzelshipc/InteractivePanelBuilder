@@ -59,12 +59,13 @@ export const videoWidget: WidgetDefinition = {
     },
     {
       name: 'objectFit',
-      label: 'widgets.video.fit',
+      label: 'widgets.video.object_fit',
+      info: 'widgets.video.object_fit_info',
       type: 'select',
       options: [
-        { value: 'cover', label: 'Заполнить' },
-        { value: 'contain', label: 'Вписать' },
-        { value: 'fill', label: 'Растянуть' },
+        { value: 'cover', label: 'widgets.video.fit_cover' },
+        { value: 'contain', label: 'widgets.video.fit_contain' },
+        { value: 'fill', label: 'widgets.video.fit_fill' },
       ],
       default: 'cover',
     },

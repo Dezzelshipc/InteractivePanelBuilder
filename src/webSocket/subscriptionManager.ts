@@ -11,7 +11,7 @@ type Callback = (data: any) => void
 export class SubscriptionManager {
   private ws?: WebSocketManager
   private cache = new Map<string, any>()
-  private debounceTimers = new Map<string, number>()
+  private throttleAvailability = new Map<string, boolean>()
   private pendingCallbacks = new Map<string, Set<Callback>>()
   private messageHandlers = new Map<string, MessageHandler>()
 
@@ -31,7 +31,7 @@ export class SubscriptionManager {
     this.ws = undefined
   }
 
-  public subscribe(topic: string, callback: Callback, debounceMs = 0) {
+  public subscribe(topic: string, callback: Callback, throttleMs = 0) {
     if (this.cache.has(topic)) {
       callback(this.cache.get(topic))
     }
@@ -42,20 +42,19 @@ export class SubscriptionManager {
     this.pendingCallbacks.get(topic)!.add(callback)
 
     if (this.pendingCallbacks.get(topic)!.size === 1) {
+      this.throttleAvailability.set(topic, true)
       const messageHandler: MessageHandler = (payload) => {
         this.cache.set(topic, payload)
-        if (debounceMs > 0) {
-          const timer = this.debounceTimers.get(topic)
-          if (timer) clearTimeout(timer)
-          const newTimer = window.setTimeout(() => {
-            const callbacks = this.pendingCallbacks.get(topic)
-            callbacks?.forEach((cb) => cb(payload))
-          }, debounceMs)
-          this.debounceTimers.set(topic, newTimer)
-        } else {
-          const callbacks = this.pendingCallbacks.get(topic)
-          callbacks?.forEach((cb) => cb(payload))
+        if (throttleMs > 0) {
+          if (!this.throttleAvailability.get(topic)) return
+          this.throttleAvailability.set(topic, false)
+
+          window.setTimeout(() => {
+            this.throttleAvailability.set(topic, true)
+          }, throttleMs)
         }
+        const callbacks = this.pendingCallbacks.get(topic)
+        callbacks?.forEach((cb) => cb(payload))
       }
       this.ws?.subscribe(topic, messageHandler)
       this.messageHandlers.set(topic, messageHandler)
