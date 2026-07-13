@@ -2,7 +2,6 @@ import { propDataSource, type DataSource, type WidgetDefinition } from '@/schema
 
 import { propWidgetSource, type WidgetSource } from '@/schema/widget'
 import { defineAsyncComponent } from 'vue'
-import JsonChartWidget from './JsonChartWidget.vue'
 
 export type JsonChartWidgetProps = {
   data: Record<string, any>
@@ -10,7 +9,7 @@ export type JsonChartWidgetProps = {
   WidgetSource
 
 export const jsonChartWidget: WidgetDefinition = {
-  component: JsonChartWidget,
+  component: defineAsyncComponent(() => import('./JsonChartWidget.vue')),
   editor: defineAsyncComponent(() => import('@/components/editor/GenericWidgetEditor.vue')),
   label: 'widgets.json_chart.label',
   icon: '📈💻',

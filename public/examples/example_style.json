@@ -11,8 +11,8 @@
     }
   },
   "widgets": {
-    "full_text-686395447": {
-      "type": "full_text",
+    "fullText-686395447": {
+      "type": "fullText",
       "position": {
         "x": 1,
         "y": 1,
@@ -38,8 +38,8 @@
         "color": "white"
       }
     },
-    "full_text-3886417409": {
-      "type": "full_text",
+    "fullText-3886417409": {
+      "type": "fullText",
       "position": {
         "x": 1,
         "y": 2,

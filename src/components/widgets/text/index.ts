@@ -6,9 +6,8 @@ import {
   type WidgetDefinition,
 } from '@/schema/widget'
 
-import TextWidget from './TextWidget.vue'
-import GenericWidgetEditor from '@/components/editor/GenericWidgetEditor.vue'
 import { propWidgetSource, type WidgetSource } from '@/schema/widget'
+import { defineAsyncComponent } from 'vue'
 
 export type TextWidgetProps = {
   text: string
@@ -20,8 +19,8 @@ export type TextWidgetProps = {
   WidgetSource
 
 export const textWidget: WidgetDefinition = {
-  component: TextWidget,
-  editor: GenericWidgetEditor,
+  component: defineAsyncComponent(() => import('./TextWidget.vue')),
+  editor: defineAsyncComponent(() => import('@/components/editor/GenericWidgetEditor.vue')),
   label: 'widgets.text.label',
   icon: '📃',
   propsSchema: [

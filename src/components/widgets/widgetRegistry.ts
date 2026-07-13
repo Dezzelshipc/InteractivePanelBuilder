@@ -1,9 +1,5 @@
-import fullTextWidget from '@/components/widgets/fullText'
-import simpleChartWidget from '@/components/widgets/simpleChart'
-import textWidget from '@/components/widgets/text'
-import videoWidget from '@/components/widgets/video'
 import type { WidgetDefinition, RegisteredWidget } from '@/schema/widget'
-import jsonChartWidget from './jsonChart'
+import { loadWidget } from './loadWidget'
 
 class WidgetRegistry {
   private registry = new Map<string, RegisteredWidget>()
@@ -30,10 +26,12 @@ class WidgetRegistry {
 
 export const widgetRegistry = new WidgetRegistry()
 
-widgetRegistry.register('full_text', fullTextWidget)
-widgetRegistry.register('text', textWidget)
+const to_register = ['fullText', 'text', 'video', 'simpleChart', 'jsonChart']
 
-widgetRegistry.register('video', videoWidget)
+async function register(types: string[]) {
+  for (const widget_type of types) {
+    await loadWidget(widget_type)
+  }
+}
 
-widgetRegistry.register('simpleChart', simpleChartWidget)
-widgetRegistry.register('jsonChart', jsonChartWidget)
+register(to_register).then(() => console.log('Registered widgets'))

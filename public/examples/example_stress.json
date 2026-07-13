@@ -9,8 +9,8 @@
     "gap": 4
   },
   "widgets": {
-    "full_text-6440816748": {
-      "type": "full_text",
+    "fullText-6440816748": {
+      "type": "fullText",
       "position": {
         "x": 2,
         "y": 0,
@@ -22,7 +22,7 @@
         "dataSource": null,
         "title": "Разные виджеты и их возможности",
         "title_align": 1,
-        "text": "",
+        "text": "Использует WebSockets тестового сервера",
         "text_align": 1,
         "self_align": 1
       },
@@ -60,8 +60,8 @@
         "padding": "10px"
       }
     },
-    "full_text-964385020": {
-      "type": "full_text",
+    "fullText-964385020": {
+      "type": "fullText",
       "position": {
         "x": 0,
         "y": 2,
@@ -113,8 +113,8 @@
         "borderRadius": "4px"
       }
     },
-    "full_text-4480929813": {
-      "type": "full_text",
+    "fullText-4480929813": {
+      "type": "fullText",
       "position": {
         "x": 0,
         "y": 0,
@@ -161,8 +161,8 @@
         "z-index": 100
       }
     },
-    "full_text-845235882": {
-      "type": "full_text",
+    "fullText-845235882": {
+      "type": "fullText",
       "position": {
         "x": 2,
         "y": 1,
@@ -198,29 +198,17 @@
         "widgetSource": null,
         "dataSource": null,
         "type": "line",
-        "labels": [
-          "Январь",
-          "Февраль",
-          "Март"
-        ],
+        "labels": ["Январь", "Февраль", "Март"],
         "datasets": [
           {
             "label": "Что-то повышается",
-            "data": [
-              10,
-              20,
-              40
-            ],
+            "data": [10, 20, 40],
             "backgroundColor": "#7ed32133",
             "borderColor": "#7ed321"
           },
           {
             "label": "Что-то понижается",
-            "data": [
-              50,
-              25,
-              5
-            ],
+            "data": [50, 25, 5],
             "backgroundColor": "#d0021b33",
             "borderColor": "#d0021b"
           }
@@ -247,32 +235,17 @@
         "widgetSource": null,
         "dataSource": null,
         "type": "radar",
-        "labels": [
-          1,
-          2,
-          3,
-          4
-        ],
+        "labels": [1, 2, 3, 4],
         "datasets": [
           {
             "label": "Красная",
-            "data": [
-              70,
-              60,
-              30,
-              40
-            ],
+            "data": [70, 60, 30, 40],
             "backgroundColor": "#FF638433",
             "borderColor": "#FF6384"
           },
           {
             "label": "Синяя",
-            "data": [
-              100,
-              30,
-              50,
-              20
-            ],
+            "data": [100, 30, 50, 20],
             "backgroundColor": "#4a90e233",
             "borderColor": "#4a90e2"
           }
@@ -287,8 +260,8 @@
         "padding": "10px"
       }
     },
-    "full_text-8001735932": {
-      "type": "full_text",
+    "fullText-8001735932": {
+      "type": "fullText",
       "position": {
         "x": 4,
         "y": 1,
@@ -312,8 +285,8 @@
         "padding": "10px"
       }
     },
-    "full_text-6003336863": {
-      "type": "full_text",
+    "fullText-6003336863": {
+      "type": "fullText",
       "position": {
         "x": 6,
         "y": 0,
@@ -351,24 +324,12 @@
         "data": {
           "type": "doughnut",
           "data": {
-            "labels": [
-              "Red",
-              "Blue",
-              "Yellow"
-            ],
+            "labels": ["Red", "Blue", "Yellow"],
             "datasets": [
               {
                 "label": "My First Dataset",
-                "data": [
-                  300,
-                  50,
-                  100
-                ],
-                "backgroundColor": [
-                  "rgb(255, 99, 132)",
-                  "rgb(54, 162, 235)",
-                  "rgb(255, 205, 86)"
-                ],
+                "data": [300, 50, 100],
+                "backgroundColor": ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)"],
                 "hoverOffset": 4
               }
             ]
@@ -403,30 +364,18 @@
         "data": {
           "type": "bar",
           "data": {
-            "labels": [
-              "Январь",
-              "Февраль",
-              "Март"
-            ],
+            "labels": ["Январь", "Февраль", "Март"],
             "datasets": [
               {
                 "label": "D1",
-                "data": [
-                  20,
-                  20,
-                  40
-                ],
+                "data": [20, 20, 40],
                 "backgroundColor": "#70ff6333",
                 "borderColor": "#70ff63",
                 "borderWidth": 2
               },
               {
                 "label": "D2",
-                "data": [
-                  40,
-                  50,
-                  10
-                ],
+                "data": [40, 50, 10],
                 "backgroundColor": "#FF638433",
                 "borderColor": "#FF6384",
                 "borderWidth": 2
@@ -568,11 +517,7 @@
         "data": {
           "type": "bubble",
           "data": {
-            "labels": [
-              "Январь",
-              "Февраль",
-              "Март"
-            ],
+            "labels": ["Январь", "Февраль", "Март"],
             "datasets": [
               {
                 "label": "Dataset",
@@ -632,8 +577,8 @@
         "border-radius": "20px"
       }
     },
-    "full_text-3151936928": {
-      "type": "full_text",
+    "fullText-3151936928": {
+      "type": "fullText",
       "position": {
         "x": 0,
         "y": 4,

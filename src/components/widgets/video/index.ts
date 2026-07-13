@@ -1,14 +1,6 @@
-import {
-  propDataSource,
-  selectAlignX,
-  selectAlignY,
-  type DataSource,
-  type WidgetDefinition,
-} from '@/schema/widget'
-
-import GenericWidgetEditor from '@/components/editor/GenericWidgetEditor.vue'
+import { type WidgetDefinition } from '@/schema/widget'
 import { propWidgetSource, type WidgetSource } from '@/schema/widget'
-import VideoWidget from './VideoWidget.vue'
+import { defineAsyncComponent } from 'vue'
 
 export type VideoWidgetProps = {
   url: string
@@ -20,8 +12,8 @@ export type VideoWidgetProps = {
 } & WidgetSource
 
 export const videoWidget: WidgetDefinition = {
-  component: VideoWidget,
-  editor: GenericWidgetEditor,
+  component: defineAsyncComponent(() => import('./VideoWidget.vue')),
+  editor: defineAsyncComponent(() => import('@/components/editor/GenericWidgetEditor.vue')),
   label: 'widgets.video.label',
   icon: '🎥',
   propsSchema: [

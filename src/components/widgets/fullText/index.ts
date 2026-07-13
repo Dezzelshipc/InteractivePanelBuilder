@@ -1,8 +1,7 @@
 import { selectAlignX, selectAlignY, type WidgetDefinition } from '@/schema/widget'
 
-import FullTextWidget from './FullTextWidget.vue'
-import GenericWidgetEditor from '@/components/editor/GenericWidgetEditor.vue'
 import { propWidgetSource, type WidgetSource } from '@/schema/widget'
+import { defineAsyncComponent } from 'vue'
 
 export type FullTextWidgetProps = {
   title: string
@@ -13,8 +12,8 @@ export type FullTextWidgetProps = {
 } & WidgetSource
 
 export const fullTextWidget: WidgetDefinition = {
-  component: FullTextWidget,
-  editor: GenericWidgetEditor,
+  component: defineAsyncComponent(() => import('./FullTextWidget.vue')),
+  editor: defineAsyncComponent(() => import('@/components/editor/GenericWidgetEditor.vue')),
   label: 'widgets.full_text.label',
   icon: '📃📃',
   propsSchema: [

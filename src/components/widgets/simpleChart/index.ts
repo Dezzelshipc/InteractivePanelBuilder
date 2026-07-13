@@ -1,7 +1,6 @@
 import { type PropSchema, type WidgetDefinition } from '@/schema/widget'
 
 import { propWidgetSource, type WidgetSource } from '@/schema/widget'
-import SimpleChartWidget from './SimpleChartWidget.vue'
 import { defineAsyncComponent } from 'vue'
 
 export type SimpleChartType = 'line' | 'bar' | 'pie' | 'polarArea' | 'radar'
@@ -64,7 +63,7 @@ export type SimpleChartWidgetProps = {
 } & WidgetSource
 
 export const simpleChartWidget: WidgetDefinition = {
-  component: SimpleChartWidget,
+  component: defineAsyncComponent(() => import('./SimpleChartWidget.vue')),
   editor: defineAsyncComponent(() => import('@/components/editor/GenericWidgetEditor.vue')),
   label: 'widgets.simple_chart.label',
   icon: '📈',
