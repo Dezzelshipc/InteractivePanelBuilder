@@ -1,0 +1,121 @@
+{
+  "version": "1.0",
+  "layout": {
+    "columns": 6,
+    "rows": 4,
+    "gap": 4,
+    "styleGrid": {
+      "padding": "1rem"
+    }
+  },
+  "widgets": {
+    "text-4237674364": {
+      "type": "text",
+      "position": {
+        "x": 4,
+        "y": 2,
+        "w": 1,
+        "h": 1
+      },
+      "props": {
+        "widgetSource": null,
+        "dataSource": {
+          "url": "ws://localhost:8765",
+          "topic": "sin"
+        },
+        "text": "A.B",
+        "prefix": "sin(count * 0.01) = ",
+        "postfix": " !",
+        "x_align": 1,
+        "y_align": 1
+      },
+      "class": "",
+      "style": {
+        "z-index": 100,
+        "border": "2px solid black",
+        "borderRadius": "8px",
+        "padding": "10px"
+      }
+    },
+    "text-8829393681": {
+      "type": "text",
+      "position": {
+        "x": 4,
+        "y": 1,
+        "w": 1,
+        "h": 1
+      },
+      "props": {
+        "widgetSource": null,
+        "dataSource": {
+          "url": "ws://localhost:8765",
+          "topic": "count"
+        },
+        "text": "X",
+        "prefix": "count = ",
+        "postfix": "",
+        "x_align": 1,
+        "y_align": 1
+      },
+      "class": "",
+      "style": {
+        "z-index": 100,
+        "border": "2px solid black",
+        "borderRadius": "8px",
+        "padding": "10px"
+      }
+    },
+    "jsonChart-2276648282": {
+      "type": "jsonChart",
+      "position": {
+        "x": 2,
+        "y": 1,
+        "w": 2,
+        "h": 2
+      },
+      "props": {
+        "widgetSource": null,
+        "dataSource": {
+          "url": "ws://localhost:8765",
+          "topic": "chart1"
+        },
+        "data": {}
+      },
+      "class": "",
+      "style": {
+        "z-index": 100,
+        "border": "2px solid black",
+        "borderRadius": "8px",
+        "padding": "10px"
+      }
+    },
+    "fullText-5410546593": {
+      "type": "fullText",
+      "position": {
+        "x": 0,
+        "y": 1,
+        "w": 2,
+        "h": 2
+      },
+      "props": {
+        "widgetSource": {
+          "url": "ws://localhost:8765",
+          "topic": "text1"
+        },
+        "dataSource": null,
+        "title": "WebSockets?",
+        "title_align": 1,
+        "text": "Настроить соответствующие параметры и запустить!\nДля данной панели запустите тестовый сервер на Python из папки в корне проекта",
+        "text_align": 1,
+        "self_align": 1
+      },
+      "class": "",
+      "style": {
+        "z-index": 100,
+        "border": "2px solid black",
+        "borderRadius": "8px",
+        "padding": "10px"
+      }
+    }
+  }
+}

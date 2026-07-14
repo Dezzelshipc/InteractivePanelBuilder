@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "layout": {
+    "columns": 4,
+    "rows": 4,
+    "styleGrid": {
+      "padding": "1em"
+    }
+  },
+  "widgets": {}
+}
