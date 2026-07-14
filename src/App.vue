@@ -6,8 +6,10 @@ import EditorToolbox from './components/editor/toolbar/EditorToolbar.vue'
 import Toast from 'primevue/toast'
 import ConfirmDialog from 'primevue/confirmdialog'
 import { onMounted } from 'vue'
+import { registerWidgets } from './components/widgets/widgetRegistry.ts'
 
 onMounted(loadLocalSchema)
+onMounted(registerWidgets)
 </script>
 
 <template>

@@ -1,5 +1,6 @@
 import type { WidgetDefinition, RegisteredWidget } from '@/schema/widget'
 import { loadWidget } from './loadWidget'
+import { onMounted } from 'vue'
 
 class WidgetRegistry {
   private registry = new Map<string, RegisteredWidget>()
@@ -34,4 +35,7 @@ async function register(types: string[]) {
   }
 }
 
-register(to_register).then(() => console.log('Registered widgets'))
+export async function registerWidgets() {
+  await register(to_register)
+  console.log('Registered widgets')
+}
